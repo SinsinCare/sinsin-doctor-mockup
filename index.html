@@ -260,10 +260,13 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .legend .sw.bar{height:9px; width:9px; border-radius:3px; background:var(--intake)}
 .legend .sw.band{height:9px; width:9px; border-radius:3px; background:var(--accent-band); border:1px solid var(--accent-band-line)}
 .legend .sw.stub{height:9px; width:9px; border-radius:3px; background:var(--mute-bg); border:1px solid var(--border)}
-.controls2{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:8px}
+.controls2{display:flex; flex-wrap:nowrap; gap:8px; align-items:center; margin-bottom:8px; overflow-x:auto} /* 기간 설정 입력은 항상 세그 오른쪽 한 줄 */
+.controls2 .seg, .controls2 .range-row{flex:none}
+.controls2 .seg button{white-space:nowrap}
 .range-row{display:none; align-items:center; gap:8px; font-size:11.5px; color:var(--ink3)}
 .range-row.show{display:flex}
-.range-row input{font:inherit; font-size:11.5px; color:var(--ink); border:1px solid var(--border); border-radius:var(--r-sm); padding:4px 8px; background:var(--surface2)}
+.range-row{flex-wrap:nowrap; white-space:nowrap}
+.range-row input{font:inherit; font-size:11px; width:118px; color:var(--ink); border:1px solid var(--border); border-radius:var(--r-sm); padding:3px 6px; background:var(--surface2)}
 .range-row input:focus-visible{outline:2px solid var(--blue); outline-offset:1px}
 .caption-row{display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:8px}
 .pair-caption{font-size:11.5px; color:var(--ink3); flex:1; min-width:0}
@@ -791,11 +794,11 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
   function rd1(v){ return Math.round(v*10)/10; }
   function flagTxt(p){ return p.flags.map(function(f){return f[0];}).join(' '); }
   function stageMeta(st){
-    if(st==='G2') return {label:'CKD 2기', dom:[40,100], ticks:3, guide:60, guideTxt:'3기 경계 60'};
-    if(st==='3a') return {label:'CKD 3a', dom:[30,70], ticks:4, guide:45, guideTxt:'3b 경계 45'};
-    if(st==='3b') return {label:'CKD 3b', dom:[20,60], ticks:4, guide:30, guideTxt:'4기 경계 30'};
-    if(st==='G4') return {label:'CKD 4기', dom:[0,40], ticks:4, guide:15, guideTxt:'5기 경계 15'};
-    return {label:'CKD 5기', dom:[0,20], ticks:4, guide:15, guideTxt:'5기 경계 15'};
+    if(st==='G2') return {label:'CKD 2기', dom:[40,100], ticks:3, guide:60, guideTxt:'3기 경계|60 mL/min'};
+    if(st==='3a') return {label:'CKD 3a', dom:[30,70], ticks:4, guide:45, guideTxt:'3b 경계|45 mL/min'};
+    if(st==='3b') return {label:'CKD 3b', dom:[20,60], ticks:4, guide:30, guideTxt:'4기 경계|30 mL/min'};
+    if(st==='G4') return {label:'CKD 4기', dom:[0,40], ticks:4, guide:15, guideTxt:'5기 경계|15 mL/min'};
+    return {label:'CKD 5기', dom:[0,20], ticks:4, guide:15, guideTxt:'5기 경계|15 mL/min'};
   }
 
   // 전역 유니크 배정 — 30명 전원의 문제 식사가 서로 겹치지 않도록 셔플 덱에서 순서대로 배정 (총 54건 ≤ 56종)
@@ -1043,17 +1046,17 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
       labs:{egfr:egfrS, cr:crS, k:kS, p:pS, bp:bpS, uacr:uacrS, hb:hbS, fpg:fpgS},
       intake:{na:na, k:k, p:pp, prot:pr},
       presets:{
-        k:{ labName:'혈청 K (검사)', labUnit:'mEq/L', lab:kS, labDom:[3,6], labTicks:3, labGuide:5.5, labGuideTxt:'임계 5.5',
-            inName:'칼륨 (섭취)', inUnit:'mg', inDom:[0,Math.max(3600,r10(lim.k*1.5))], inTicks:3, inLimit:lim.k, inLimitTxt:'제한 '+fmt(lim.k),
+        k:{ labName:'혈청 K (검사)', labUnit:'mEq/L', lab:kS, labDom:[3,6], labTicks:3, labGuide:5.5, labGuideTxt:'임계|5.5 mEq/L',
+            inName:'칼륨 (섭취)', inUnit:'mg', inDom:[0,Math.max(3600,r10(lim.k*1.5))], inTicks:3, inLimit:lim.k, inLimitTxt:'제한|'+fmt(lim.k)+' mg',
             caption:'<b>혈청 칼륨(K) × 칼륨 섭취</b> — 고칼륨혈증 관리 · 현재 '+kEnd.toFixed(1)+(kEnd>=5.0?' 상승 추세':' 안정'), intake:k },
-        p:{ labName:'혈청 P (검사)', labUnit:'mg/dL', lab:pS, labDom:[3,6], labTicks:3, labGuide:4.5, labGuideTxt:'임계 4.5',
-            inName:'인 (섭취)', inUnit:'mg', inDom:[0,1500], inTicks:3, inLimit:lim.p, inLimitTxt:'제한 '+fmt(lim.p),
+        p:{ labName:'혈청 P (검사)', labUnit:'mg/dL', lab:pS, labDom:[3,6], labTicks:3, labGuide:4.5, labGuideTxt:'임계|4.5 mg/dL',
+            inName:'인 (섭취)', inUnit:'mg', inDom:[0,1500], inTicks:3, inLimit:lim.p, inLimitTxt:'제한|'+fmt(lim.p)+' mg',
             caption:'<b>혈청 인(P) × 인 섭취</b> — CKD-MBD 관리'+(pFlag?' · 임계 초과':''), intake:pp },
         renal:{ labName:'eGFR (검사)', labUnit:'mL/min', lab:egfrS, labDom:sm.dom, labTicks:sm.ticks, labGuide:sm.guide, labGuideTxt:sm.guideTxt,
-            inName:'단백질 (섭취)', inUnit:'g', inDom:[0,Math.max(100,protLimit*2.5)], inTicks:4, inLimit:protLimit, inLimitTxt:'제한 '+protLimit+' ('+gkgLimit+'g/kg)',
+            inName:'단백질 (섭취)', inUnit:'g', inDom:[0,Math.max(100,protLimit*2.5)], inTicks:4, inLimit:protLimit, inLimitTxt:'제한|'+protLimit+' g',
             caption:'<b>eGFR × 단백질 섭취</b> — 신기능 보존 · 단백뇨 '+alb+' → '+gkgLimit+'g/kg', intake:pr },
-        na:{ labName:'수축기 혈압 (측정)', labUnit:'mmHg', lab:bpS, labDom:[100,160], labTicks:3, labGuide:130, labGuideTxt:'목표 130',
-            inName:'나트륨 (섭취)', inUnit:'mg', inDom:[0,4500], inTicks:3, inLimit:2000, inLimitTxt:'제한 2,000',
+        na:{ labName:'수축기 혈압 (측정)', labUnit:'mmHg', lab:bpS, labDom:[100,160], labTicks:3, labGuide:130, labGuideTxt:'목표|130 mmHg',
+            inName:'나트륨 (섭취)', inUnit:'mg', inDom:[0,4500], inTicks:3, inLimit:2000, inLimitTxt:'제한|2,000 mg',
             caption:'<b>수축기 혈압 × 나트륨 섭취</b> — 염분 2g/day(KDIGO)·부종 관리 (혈청 Na 아님)', intake:na }
       }
     };
@@ -1065,7 +1068,7 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
       mealBox=document.getElementById('mealDetail'), legend=document.getElementById('legend'),
       pairCaption=document.getElementById('pairCaption');
   var preset='k', mode='abs', CUR=null, MD_CUR=null;
-  var W=720, ML=48, MR=64; // 우측 여백 — 임계·제한 라벨 전용 거터 (플롯과 절대 안 겹침)
+  var W=720, ML=48, MR=68; // 우측 여백 — 임계·제한 라벨 전용 거터 (플롯과 절대 안 겹침)
   var VIEW={a:N-31, b:N-1}; // 기본 1개월
   function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
   function el(n,attrs){ var e=document.createElementNS('http://www.w3.org/2000/svg',n); for(var kk in attrs) e.setAttribute(kk,attrs[kk]); return e; }
@@ -1091,15 +1094,10 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
   function guide(g,y,color){
     g.appendChild(el('line',{x1:ML,x2:W-MR,y1:y,y2:y,stroke:color,'stroke-width':1.4,'stroke-dasharray':'5 4'}));
   }
-  function guideLabel(g,y,txt,color){ // 플롯 밖 우측 거터에 배치 — 데이터와 겹칠 수 없음
-    var x0=W-MR+8, w2=0; for(var ci=0;ci<txt.length;ci++) w2+= txt.charCodeAt(ci)>127? 9.8:5.6;
-    if(w2>MR-12 && txt.indexOf(' ')>0){ // 거터 폭 초과 시 공백에서 두 줄로
-      var sp=txt.indexOf(' ');
-      var ta=el('text',{x:x0,y:y-1.5,'font-size':9,'font-weight':700,fill:color}); ta.textContent=txt.slice(0,sp); g.appendChild(ta);
-      var tb=el('text',{x:x0,y:y+9.5,'font-size':9.5,'font-weight':800,fill:color}); tb.textContent=txt.slice(sp+1); g.appendChild(tb);
-    } else {
-      var t=el('text',{x:x0,y:y+3.5,'font-size':9.5,'font-weight':800,fill:color}); t.textContent=txt; g.appendChild(t);
-    }
+  function guideLabel(g,y,txt,color){ // 우측 거터, 항상 2줄 고정: 1줄 라벨 / 2줄 값+단위 ('|' 구분)
+    var sp=txt.split('|'), x0=W-MR+8;
+    var ta=el('text',{x:x0,y:y-2,'font-size':9,'font-weight':700,fill:color}); ta.textContent=sp[0]; g.appendChild(ta);
+    var tb=el('text',{x:x0,y:y+10,'font-size':9.5,'font-weight':800,fill:color}); tb.textContent=sp[1]||''; g.appendChild(tb);
   }
   function trackLabel(g,y,c,text,isBar){
     g.appendChild(isBar? el('rect',{x:ML,y:y-8,width:9,height:9,rx:2.5,fill:c}) : el('rect',{x:ML,y:y-5,width:14,height:3,rx:1.5,fill:c}));
@@ -1280,7 +1278,7 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
       var gy0=yScale(dom,top,bot)(100);
       guide(g,gy0,css('--accent-deep'));
       drawBarsFrom(g,P,items,top,bot,dom,function(v){ return v/P.inLimit*100; });
-      guideLabel(g,gy0,'기준 100%',css('--accent-deep'));
+      guideLabel(g,gy0,'기준|100%',css('--accent-deep'));
       (function(){
         var ys=yScale(dom,top,bot), vis=visibleLabs(P);
         var pts=vis.map(function(o){ return [xPos(o.ix), ys(o.v/P.labGuide*100), o]; });
@@ -1349,10 +1347,10 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
       L2.k=+document.getElementById('limK').value||L2.k;
       L2.p=+document.getElementById('limP').value||L2.p;
       L2.prot=+document.getElementById('limProt').value||L2.prot;
-      CUR.presets.na.inLimit=L2.na; CUR.presets.na.inLimitTxt='제한 '+fmt(L2.na);
-      CUR.presets.k.inLimit=L2.k; CUR.presets.k.inLimitTxt='제한 '+fmt(L2.k);
-      CUR.presets.p.inLimit=L2.p; CUR.presets.p.inLimitTxt='제한 '+fmt(L2.p);
-      CUR.presets.renal.inLimit=L2.prot; CUR.presets.renal.inLimitTxt='제한 '+L2.prot+'g';
+      CUR.presets.na.inLimit=L2.na; CUR.presets.na.inLimitTxt='제한|'+fmt(L2.na)+' mg';
+      CUR.presets.k.inLimit=L2.k; CUR.presets.k.inLimitTxt='제한|'+fmt(L2.k)+' mg';
+      CUR.presets.p.inLimit=L2.p; CUR.presets.p.inLimitTxt='제한|'+fmt(L2.p)+' mg';
+      CUR.presets.renal.inLimit=L2.prot; CUR.presets.renal.inLimitTxt='제한|'+L2.prot+' g';
       draw();
       if(document.getElementById('weekPanel').classList.contains('show')) renderWeek();
       CUR.fluid.mode=document.getElementById('limFluidMode').value;
