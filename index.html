@@ -462,6 +462,51 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .mp-approve{display:flex; gap:8px; align-items:center; margin-top:12px; font-size:12.5px; font-weight:700}
 .mp-approve input{accent-color:var(--blue)}
 @media (prefers-reduced-motion: reduce){ *{transition:none !important} }
+
+/* ── PDF 리포트 (인쇄 전용 A4) ── */
+#printReport{display:none; font-size:11px; color:#1A2233; background:#fff; -webkit-print-color-adjust:exact; print-color-adjust:exact; font-family:inherit}
+#printReport.debug{display:block; max-width:820px; margin:0 auto; padding:24px; box-shadow:0 0 0 1px #ddd}
+@media print{
+  html, body{height:auto !important; overflow:visible !important; background:#fff !important}
+  .wrap, .toast, .notif-panel, .modal-ov, .meal-detail{display:none !important}
+  #printReport{display:block; padding:0}
+  @page{size:A4; margin:12mm}
+}
+.pr-hd{display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #3563E9; padding-bottom:10px}
+.pr-hd .brand{font-size:13px; font-weight:900; color:#3563E9; letter-spacing:.06em}
+.pr-hd .t{font-size:21px; font-weight:900; margin-top:2px}
+.pr-meta{font-size:9.5px; color:#5B6472; text-align:right; line-height:1.6}
+.pr-sub{font-size:11px; color:#3D4657; margin-top:8px}
+.pr-sub b{font-weight:800}
+.pr-sec{margin-top:14px; page-break-inside:avoid}
+.pr-sec h3{font-size:10px; font-weight:900; color:#3563E9; letter-spacing:.08em; margin-bottom:6px}
+.pr-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:6px}
+.pr-tile{border:1px solid #DDE3EE; border-radius:8px; padding:6px 8px}
+.pr-tile .k{font-size:8.5px; color:#5B6472; font-weight:700}
+.pr-tile .v{font-size:14px; font-weight:800; font-variant-numeric:tabular-nums}
+.pr-tile .u{font-size:8.5px; color:#5B6472; font-weight:600}
+.pr-tile.warn{border-color:#E8BE93; background:#FDF6EC}
+.pr-chips{display:flex; flex-wrap:wrap; gap:4px; font-size:10px; color:#3D4657}
+.pr-chips span{border:1px solid #DDE3EE; border-radius:999px; padding:2px 9px; background:#F7F8FB}
+.pr-chips span.set{background:#EDF2FF; border-color:#C7D6FB; color:#2447A8; font-weight:700}
+table.pr-tb{width:100%; border-collapse:collapse; font-size:10.5px}
+.pr-tb th{text-align:left; color:#5B6472; font-weight:700; border-bottom:1px solid #C9D2E3; padding:3px 6px}
+.pr-tb td{border-bottom:1px solid #EDF0F6; padding:4px 6px; vertical-align:top}
+.pr-tb td.lbl{font-weight:800; white-space:nowrap}
+.pr-cols{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px}
+.pr-svg{border:1px solid #EDF0F6; border-radius:8px; padding:8px 8px 4px}
+.pr-svg svg{width:100%; height:auto; display:block}
+.pr-cap{font-size:9px; color:#5B6472; margin-top:4px}
+.pr-top3{display:flex; gap:8px}
+.pr-meal{flex:1; border:1px solid #DDE3EE; border-radius:8px; padding:6px 8px; display:flex; gap:8px; align-items:center; min-width:0}
+.pr-meal img{width:36px; height:36px; border-radius:6px; object-fit:cover; flex:none}
+.pr-meal .nm{font-size:10.5px; font-weight:800}
+.pr-meal .sb{font-size:9px; color:#5B6472}
+.pr-meal .rk{margin-left:auto; font-size:9.5px; font-weight:800; color:#B35C09; white-space:nowrap}
+.pr-li{font-size:10.5px; margin-top:3px; display:flex; gap:6px; align-items:flex-start}
+.pr-li .bx{flex:none; width:9px; height:9px; border:1.2px solid #8A94A6; border-radius:2.5px; margin-top:2px}
+.pr-li.done .bx{background:#3563E9; border-color:#3563E9}
+.pr-foot{margin-top:16px; border-top:1px solid #C9D2E3; padding-top:6px; font-size:8.5px; color:#5B6472; display:flex; justify-content:space-between}
 </style>
 
 <div class="wrap">
@@ -513,7 +558,7 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
           </div>
           <div class="a-actions">
             <button class="btn" id="editLabs">수치 수정</button>
-            <button class="btn primary">PDF 리포트</button>
+            <button class="btn primary" id="pdfReport">PDF 리포트</button>
           </div>
         </div>
         <div class="vitals" id="vitalsRow" aria-label="최근 핵심 수치"></div>
@@ -623,7 +668,7 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
           <div class="send-grid" id="sendGrid"></div>
           <div class="pdf-row" style="padding:12px 0 0">
             <span class="note" id="sendNote"></span>
-            <button class="btn">PDF 저장</button>
+            <button class="btn" id="pdfSave">PDF 저장</button>
             <button class="btn primary" id="sendBtn">환자 앱으로 보내기</button>
           </div>
         </section>
@@ -1633,6 +1678,58 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
       mdOv.classList.remove('show'); showToast('비밀번호가 변경되었습니다 — 다른 기기에서 로그아웃됨');
     });
   }
+  // ── PDF 리포트: 인쇄 전용 A4 뷰 구성 → window.print() (브라우저에서 PDF 저장) ──
+  var prEl=document.createElement('div'); prEl.id='printReport'; document.body.appendChild(prEl);
+  function buildPrintReport(){
+    if(!CUR) return;
+    var b=CUR, p=b.p, L=b.labs;
+    function dv(s,dec){ var d=s[s.length-1]-s[s.length-2], up=d>=0; return (up?'▲':'▼')+Math.abs(dec!=null? +d.toFixed(dec):Math.round(d)); }
+    var tiles=[
+      ['eGFR '+p.visit, last(L.egfr), 'mL/min', dv(L.egfr), false],
+      ['Cr '+p.visit, last(L.cr).toFixed(2), 'mg/dL', dv(L.cr,2), false],
+      ['K '+p.visit, last(L.k).toFixed(1), 'mEq/L', dv(L.k,1), last(L.k)>=5.0],
+      ['P '+p.visit, last(L.p).toFixed(1), 'mg/dL', dv(L.p,1), last(L.p)>4.5],
+      ['UACR '+p.visit, fmt(last(L.uacr)), 'mg/g', dv(L.uacr,0), false],
+      L.hb? ['HbA1c '+p.visit, last(L.hb).toFixed(1), '% · 공복 '+last(L.fpg), dv(L.hb,1), last(L.hb)>=7.0] : null
+    ].filter(Boolean);
+    var insight=document.getElementById('chartInsight');
+    var insRows=insight? [].slice.call(insight.querySelectorAll('.ins-row')).map(function(r){
+      var tag=(r.querySelector('.ins-tag')||{}).textContent||'';
+      var body=r.querySelector('p')? r.querySelector('p').textContent.trim():'';
+      return '<tr><td class="lbl">'+tag+'</td><td>'+body+'</td></tr>'; }).join('') : '';
+    var fluidTxt = b.fluid.mode==='limit'? '제한 '+fmt(b.fluid.ml)+' mL/일' : '기록만 (제한 미설정)';
+    prEl.innerHTML =
+      '<div class="pr-hd"><div><div class="brand">신신당부 DOCTOR</div><div class="t">'+p.nm+' 환자 리포트</div>'
+      +'<div class="pr-sub">'+p.sx+' · '+p.age+'세 · <b>'+b.stage.label+'</b> · '+p.cause+' · BMI '+b.bmi+' ('+b.w+'kg/'+b.h+'cm) · 단백뇨 '+b.alb+' · 혈압 '+b.sbp+'/'+b.dbp+'</div></div>'
+      +'<div class="pr-meta">발행 2026-07-29<br>담당의 이종수 · 신촌힘찬병원 신장내과<br>자료 기간 최근 6개월 (앱 기록 · 외래 채혈)</div></div>'
+      +'<div class="pr-sec"><h3>최근 검사 수치</h3><div class="pr-grid">'
+      +tiles.map(function(t){ return '<div class="pr-tile'+(t[4]?' warn':'')+'"><div class="k">'+t[0]+'</div><div class="v">'+t[1]+' <span class="u">'+t[2]+' '+t[3]+'</span></div></div>'; }).join('')
+      +'</div></div>'
+      +'<div class="pr-sec"><h3>1일 섭취 기준</h3>'
+      +'<div class="pr-chips" style="margin-bottom:4px"><span>권고 · KDIGO</span><span>Na 2,000mg</span><span>K 수치 기반 개별화</span><span>P 800~1,000mg</span><span>단백질 '+b.gkgLimit+'g/kg = '+Math.round(b.gkgLimit*b.w)+'g/일</span><span>수분 필요 시 제한</span></div>'
+      +'<div class="pr-chips"><span class="set">의사 설정</span><span class="set">Na '+fmt(b.lim.na)+'mg</span><span class="set">K '+fmt(b.lim.k)+'mg</span><span class="set">P '+fmt(b.lim.p)+'mg</span><span class="set">단백질 '+b.lim.prot+'g</span><span class="set">수분 '+fluidTxt+'</span></div></div>'
+      +'<div class="pr-sec"><h3>검사 × 섭취 통합 차트 — '+(b.presets[preset].labName||'')+'</h3><div class="pr-svg">'+document.getElementById('chart').outerHTML+'</div>'
+      +'<div class="pr-cap">'+(pairCaption.textContent||'')+' · 점선: 임계·제한 기준 · 주황 막대: 기준 초과일</div></div>'
+      +(insRows? '<div class="pr-sec"><h3>차트 해석</h3><table class="pr-tb">'+insRows+'</table></div>':'')
+      +'<div class="pr-sec"><h3>식이 분석 총평 · 최근 4주</h3><table class="pr-tb">'
+      +b.ai.map(function(a){ return '<tr><td class="lbl">'+a.tag+'</td><td>'+a.tx+'</td></tr>'; }).join('')
+      +'</table></div>'
+      +(b.top3.length? '<div class="pr-sec"><h3>고위험 식사 TOP '+Math.min(3,b.top3.length)+' · 최근 4주</h3><div class="pr-top3">'
+        +b.top3.slice(0,3).map(function(t,i){ return '<div class="pr-meal">'+(MEAL_IMG[t.nm]?'<img src="'+MEAL_IMG[t.nm]+'" alt="">':'')+'<div style="min-width:0"><div class="nm">'+(i+1)+'. '+t.nm+'</div><div class="sb">'+t.sub+'</div></div><span class="rk">'+t.chip+'</span></div>'; }).join('')
+        +'</div></div>':'')
+      +'<div class="pr-sec pr-cols">'
+      +'<div><h3>환자 실천 과제</h3>'+b.checks.map(function(c){ return '<div class="pr-li'+(c[0]?' done':'')+'"><span class="bx"></span><span>'+c[1].replace(/<[^>]*>/g,'')+'</span></div>'; }).join('')+'</div>'
+      +'<div><h3>검사 · 일정</h3>'+b.scheds.map(function(s){ return '<div class="pr-li"><span>'+s[0].replace(/<[^>]*>/g,'')+' — <b>'+s[1]+'</b></span></div>'; }).join('')+'</div>'
+      +'<div><h3>복용약 · 순응도 '+b.medAdh+'%</h3>'+b.meds.map(function(m2){ return '<div class="pr-li"><span>'+m2[0]+' — '+m2[1]+'</span></div>'; }).join('')+'</div>'
+      +'</div>'
+      +'<div class="pr-foot"><span>본 리포트는 신신당부 의료진용 대시보드에서 생성되었습니다 · 데모 데이터(합성)</span><span>ⓒ Mediology Inc. · 서명: ____________</span></div>';
+  }
+  document.addEventListener('click',function(e){
+    if(e.target && (e.target.id==='pdfReport' || e.target.id==='pdfSave')){
+      buildPrintReport();
+      setTimeout(function(){ window.print(); }, 80);
+    }
+  });
   // 수치 수정 모달 — 최근 채혈값 갱신
   function openLabsModal(){
     if(!CUR) return;
