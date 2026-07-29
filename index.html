@@ -463,50 +463,49 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .mp-approve input{accent-color:var(--blue)}
 @media (prefers-reduced-motion: reduce){ *{transition:none !important} }
 
-/* ── PDF 리포트 (인쇄 전용 A4) ── */
-#printReport{display:none; font-size:11px; color:#1A2233; background:#fff; -webkit-print-color-adjust:exact; print-color-adjust:exact; font-family:inherit}
-#printReport.debug{display:block; max-width:820px; margin:0 auto; padding:24px; box-shadow:0 0 0 1px #ddd}
+/* ── PDF 리포트 (환자용 · 인쇄 전용 A4 원페이지) ── */
+#printReport{display:none; font-size:11.5px; color:#232B3A; background:#fff; -webkit-print-color-adjust:exact; print-color-adjust:exact; line-height:1.5}
+#printReport.debug{display:block; max-width:760px; margin:0 auto; padding:28px; box-shadow:0 0 0 1px #ddd}
 @media print{
   html, body{height:auto !important; overflow:visible !important; background:#fff !important}
   .wrap, .toast, .notif-panel, .modal-ov, .meal-detail{display:none !important}
-  #printReport{display:block; padding:0}
-  @page{size:A4; margin:12mm}
+  #printReport{display:block}
+  @page{size:A4; margin:11mm}
 }
-.pr-hd{display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #3563E9; padding-bottom:10px}
-.pr-hd .brand{font-size:13px; font-weight:900; color:#3563E9; letter-spacing:.06em}
-.pr-hd .t{font-size:21px; font-weight:900; margin-top:2px}
-.pr-meta{font-size:9.5px; color:#5B6472; text-align:right; line-height:1.6}
-.pr-sub{font-size:11px; color:#3D4657; margin-top:8px}
-.pr-sub b{font-weight:800}
-.pr-sec{margin-top:14px; page-break-inside:avoid}
-.pr-sec h3{font-size:10px; font-weight:900; color:#3563E9; letter-spacing:.08em; margin-bottom:6px}
-.pr-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:6px}
-.pr-tile{border:1px solid #DDE3EE; border-radius:8px; padding:6px 8px}
-.pr-tile .k{font-size:8.5px; color:#5B6472; font-weight:700}
-.pr-tile .v{font-size:14px; font-weight:800; font-variant-numeric:tabular-nums}
-.pr-tile .u{font-size:8.5px; color:#5B6472; font-weight:600}
-.pr-tile.warn{border-color:#E8BE93; background:#FDF6EC}
-.pr-chips{display:flex; flex-wrap:wrap; gap:4px; font-size:10px; color:#3D4657}
-.pr-chips span{border:1px solid #DDE3EE; border-radius:999px; padding:2px 9px; background:#F7F8FB}
-.pr-chips span.set{background:#EDF2FF; border-color:#C7D6FB; color:#2447A8; font-weight:700}
-table.pr-tb{width:100%; border-collapse:collapse; font-size:10.5px}
-.pr-tb th{text-align:left; color:#5B6472; font-weight:700; border-bottom:1px solid #C9D2E3; padding:3px 6px}
-.pr-tb td{border-bottom:1px solid #EDF0F6; padding:4px 6px; vertical-align:top}
-.pr-tb td.lbl{font-weight:800; white-space:nowrap}
-.pr-cols{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px}
-.pr-svg{border:1px solid #EDF0F6; border-radius:8px; padding:8px 8px 4px}
-.pr-svg svg{width:100%; height:auto; display:block}
-.pr-cap{font-size:9px; color:#5B6472; margin-top:4px}
-.pr-top3{display:flex; gap:8px}
-.pr-meal{flex:1; border:1px solid #DDE3EE; border-radius:8px; padding:6px 8px; display:flex; gap:8px; align-items:center; min-width:0}
-.pr-meal img{width:36px; height:36px; border-radius:6px; object-fit:cover; flex:none}
-.pr-meal .nm{font-size:10.5px; font-weight:800}
-.pr-meal .sb{font-size:9px; color:#5B6472}
-.pr-meal .rk{margin-left:auto; font-size:9.5px; font-weight:800; color:#B35C09; white-space:nowrap}
-.pr-li{font-size:10.5px; margin-top:3px; display:flex; gap:6px; align-items:flex-start}
-.pr-li .bx{flex:none; width:9px; height:9px; border:1.2px solid #8A94A6; border-radius:2.5px; margin-top:2px}
-.pr-li.done .bx{background:#3563E9; border-color:#3563E9}
-.pr-foot{margin-top:16px; border-top:1px solid #C9D2E3; padding-top:6px; font-size:8.5px; color:#5B6472; display:flex; justify-content:space-between}
+.pr-hd{display:flex; justify-content:space-between; gap:14px; align-items:stretch; border-bottom:2px solid #3563E9; padding-bottom:10px}
+.pr-brand{font-size:11px; font-weight:900; color:#3563E9; letter-spacing:.08em}
+.pr-t{font-size:22px; font-weight:900; margin-top:3px}
+.pr-sub{font-size:10.5px; color:#5B6472; margin-top:4px}
+.pr-dday{flex:none; border:1.5px solid #3563E9; border-radius:12px; padding:8px 20px; text-align:center; background:#EDF2FF; display:flex; flex-direction:column; justify-content:center}
+.pr-dday .l{font-size:9.5px; font-weight:800; color:#2447A8}
+.pr-dday .d{font-size:26px; font-weight:900; color:#3563E9; font-variant-numeric:tabular-nums; line-height:1.15}
+.pr-dday .w{font-size:10px; color:#3D4657; font-weight:700}
+.pr-cmt{margin-top:12px; background:#FDF6EC; border:1px solid #EDD9BE; border-radius:12px; padding:10px 14px; font-size:12px; page-break-inside:avoid}
+.pr-cmt .who{font-size:9.5px; font-weight:800; color:#B35C09; margin-bottom:3px}
+.pr-sec{margin-top:12px; page-break-inside:avoid}
+.pr-sec h3{font-size:11px; font-weight:900; color:#3563E9; margin-bottom:5px}
+.pr-2col{display:grid; grid-template-columns:1.15fr 1fr; gap:14px; margin-top:12px; page-break-inside:avoid}
+.pr-stat{display:flex; gap:8px; align-items:flex-start; padding:6px 0; border-bottom:1px solid #EDF0F6}
+.pr-stat:last-child{border-bottom:0}
+.pr-stat .pill{flex:none; font-size:9px; font-weight:800; border-radius:999px; padding:2px 8px; margin-top:2px; white-space:nowrap}
+.pill.ok{background:#E4F4EB; color:#1F8A52}
+.pill.watch{background:#FDF0E0; color:#B35C09}
+.pr-stat .nm2{font-weight:800; font-size:11px}
+.pr-stat .nm2 b{font-variant-numeric:tabular-nums; color:#232B3A}
+.pr-stat .ex2{font-size:10px; color:#3D4657; margin-top:1px}
+.pr-goal{display:flex; gap:8px; align-items:baseline; padding:4.5px 0; font-size:11px}
+.pr-goal .gk{flex:none; width:78px; font-weight:800}
+.pr-goal b{font-variant-numeric:tabular-nums}
+.pr-goal .gt{color:#5B6472; font-size:9.5px}
+.pr-chips2{display:flex; flex-wrap:wrap; gap:5px; font-size:10px; margin-top:2px}
+.pr-chips2 span{border-radius:999px; padding:3px 10px; background:#F7F8FB; border:1px solid #DDE3EE; color:#3D4657}
+.pr-prom .it{display:flex; gap:9px; padding:6px 11px; border:1px solid #C7D6FB; background:#F5F8FF; border-radius:10px; margin-top:5px; font-size:11.5px; align-items:center; page-break-inside:avoid}
+.pr-prom .no{flex:none; width:17px; height:17px; border-radius:50%; background:#3563E9; color:#fff; font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center}
+.pr-sched{display:flex; gap:8px; margin-top:2px}
+.pr-sched .s{flex:1; border:1px solid #DDE3EE; border-radius:10px; padding:6px 10px; font-size:10.5px}
+.pr-sched .s b{display:block; font-size:9.5px; color:#5B6472; font-weight:700}
+.pr-sched .dd{color:#3563E9; font-weight:800; margin-left:4px}
+.pr-foot{margin-top:12px; border-top:1px solid #C9D2E3; padding-top:6px; font-size:8.5px; color:#5B6472; display:flex; justify-content:space-between}
 </style>
 
 <div class="wrap">
@@ -1683,46 +1682,61 @@ table.pr-tb{width:100%; border-collapse:collapse; font-size:10.5px}
   function buildPrintReport(){
     if(!CUR) return;
     var b=CUR, p=b.p, L=b.labs;
-    function dv(s,dec){ var d=s[s.length-1]-s[s.length-2], up=d>=0; return (up?'▲':'▼')+Math.abs(dec!=null? +d.toFixed(dec):Math.round(d)); }
-    var tiles=[
-      ['eGFR '+p.visit, last(L.egfr), 'mL/min', dv(L.egfr), false],
-      ['Cr '+p.visit, last(L.cr).toFixed(2), 'mg/dL', dv(L.cr,2), false],
-      ['K '+p.visit, last(L.k).toFixed(1), 'mEq/L', dv(L.k,1), last(L.k)>=5.0],
-      ['P '+p.visit, last(L.p).toFixed(1), 'mg/dL', dv(L.p,1), last(L.p)>4.5],
-      ['UACR '+p.visit, fmt(last(L.uacr)), 'mg/g', dv(L.uacr,0), false],
-      L.hb? ['HbA1c '+p.visit, last(L.hb).toFixed(1), '% · 공복 '+last(L.fpg), dv(L.hb,1), last(L.hb)>=7.0] : null
-    ].filter(Boolean);
-    var insight=document.getElementById('chartInsight');
-    var insRows=insight? [].slice.call(insight.querySelectorAll('.ins-row')).map(function(r){
-      var tag=(r.querySelector('.ins-tag')||{}).textContent||'';
-      var body=r.querySelector('p')? r.querySelector('p').textContent.trim():'';
-      return '<tr><td class="lbl">'+tag+'</td><td>'+body+'</td></tr>'; }).join('') : '';
-    var fluidTxt = b.fluid.mode==='limit'? '제한 '+fmt(b.fluid.ml)+' mL/일' : '기록만 (제한 미설정)';
+    // 다음 외래 D-day
+    var nx=null; b.scheds.forEach(function(s){ var t=s[0].replace(/<[^>]*>/g,''); if(!nx && /외래/.test(t)) nx=[t,s[1]]; });
+    if(!nx && b.scheds.length){ var s0=b.scheds[b.scheds.length-1]; nx=[s0[0].replace(/<[^>]*>/g,''), s0[1]]; }
+    function ddOf(dateTxt){ var dm2=(dateTxt||'').match(/(\d{2})\/(\d{2})/); if(!dm2) return '';
+      var diff=Math.round((new Date(2026,+dm2[1]-1,+dm2[2])-new Date(2026,6,29))/86400000);
+      return diff===0?'D-DAY':(diff>0?'D-'+diff:''); }
+    var dd = nx? ddOf(nx[1]) : '';
+    // 검사 결과 쉬운 말 풀이 (그래프 대신 문장)
+    var eg=last(L.egfr), egd=eg-L.egfr[L.egfr.length-2], kv=last(L.k), pv=last(L.p);
+    var stats=[
+      {nm:'콩팥이 노폐물을 거르는 힘 (eGFR)', v:eg, u:'', ok:egd>=-1,
+       ex: egd>=-1? '지난 검사와 비슷하게 유지되고 있어요. 지금처럼 관리하면 됩니다.' : '지난 검사보다 조금 낮아졌어요. 식사와 약을 더 꼼꼼히 챙겨봐요.'},
+      {nm:'혈액 속 칼륨 (K)', v:kv.toFixed(1), u:'', ok:kv<5.0,
+       ex: kv>=5.5? '기준보다 높아요. 참외·바나나 같은 과일과 생채소를 줄이고, 빠른 재검이 필요해요.'
+         : kv>=5.0? '조금 높은 편이에요. 과일과 생채소는 하루 한 번으로 줄여봐요.' : '좋은 범위에 있어요.'},
+      {nm:'혈액 속 인 (P)', v:pv.toFixed(1), u:'', ok:pv<=4.5,
+       ex: pv>4.5? '기준보다 높아요. 햄·소시지·콜라 같은 가공식품을 줄이면 내려갑니다.' : '좋은 범위예요. 가공식품만 계속 조심해요.'}
+    ];
+    if(L.hb) stats.push({nm:'혈당 평균 (당화혈색소)', v:last(L.hb).toFixed(1), u:'%', ok:last(L.hb)<7.0,
+       ex: last(L.hb)>=7.0? '혈당이 목표보다 조금 높아요. 식사 시간을 일정하게 지켜봐요.' : '혈당이 잘 조절되고 있어요.'});
+    // 하루 식사 목표 (의사 설정 값 그대로, 쉬운 안내 문구)
+    var goals=[
+      ['소금기(나트륨)', fmt(b.lim.na)+'mg', '국·찌개 국물을 남기는 것만으로 크게 줄어요'],
+      ['칼륨', fmt(b.lim.k)+'mg', '과일·생채소는 정해진 양만큼만'],
+      ['인', fmt(b.lim.p)+'mg', '가공식품·탄산음료 줄이기'],
+      ['단백질', b.lim.prot+'g', '고기·생선은 한 끼에 손바닥 절반 크기'],
+      ['수분', b.fluid.mode==='limit'? fmt(b.fluid.ml)+'mL':'기록만', b.fluid.mode==='limit'? '하루에 이 양을 넘지 않게 나눠 마셔요':'마신 만큼 앱에 기록만 하면 돼요']
+    ];
+    // 실천 약속: 의사가 체크한 항목만
+    var checked=[], live=document.querySelectorAll('#checkList input[type="checkbox"]');
+    if(live.length===b.checks.length){ b.checks.forEach(function(c,i){ if(live[i].checked) checked.push(c[1]); }); }
+    else b.checks.slice(0,2).forEach(function(c){ checked.push(c[1]); });
+    checked=checked.map(function(t){ return t.replace(/<[^>]*>/g,''); });
+    var avoid=(b.avoidEaten||[]).slice(0,5).map(function(c){ return c[0]; });
+    var cmt=((CUR.drComment!=null? CUR.drComment : b.commentSuggest)||'').trim();
     prEl.innerHTML =
-      '<div class="pr-hd"><div><div class="brand">신신당부 DOCTOR</div><div class="t">'+p.nm+' 환자 리포트</div>'
-      +'<div class="pr-sub">'+p.sx+' · '+p.age+'세 · <b>'+b.stage.label+'</b> · '+p.cause+' · BMI '+b.bmi+' ('+b.w+'kg/'+b.h+'cm) · 단백뇨 '+b.alb+' · 혈압 '+b.sbp+'/'+b.dbp+'</div></div>'
-      +'<div class="pr-meta">발행 2026-07-29<br>담당의 이종수 · 신촌힘찬병원 신장내과<br>자료 기간 최근 6개월 (앱 기록 · 외래 채혈)</div></div>'
-      +'<div class="pr-sec"><h3>최근 검사 수치</h3><div class="pr-grid">'
-      +tiles.map(function(t){ return '<div class="pr-tile'+(t[4]?' warn':'')+'"><div class="k">'+t[0]+'</div><div class="v">'+t[1]+' <span class="u">'+t[2]+' '+t[3]+'</span></div></div>'; }).join('')
-      +'</div></div>'
-      +'<div class="pr-sec"><h3>1일 섭취 기준</h3>'
-      +'<div class="pr-chips" style="margin-bottom:4px"><span>권고 · KDIGO</span><span>Na 2,000mg</span><span>K 수치 기반 개별화</span><span>P 800~1,000mg</span><span>단백질 '+b.gkgLimit+'g/kg = '+Math.round(b.gkgLimit*b.w)+'g/일</span><span>수분 필요 시 제한</span></div>'
-      +'<div class="pr-chips"><span class="set">의사 설정</span><span class="set">Na '+fmt(b.lim.na)+'mg</span><span class="set">K '+fmt(b.lim.k)+'mg</span><span class="set">P '+fmt(b.lim.p)+'mg</span><span class="set">단백질 '+b.lim.prot+'g</span><span class="set">수분 '+fluidTxt+'</span></div></div>'
-      +'<div class="pr-sec"><h3>검사 × 섭취 통합 차트 — '+(b.presets[preset].labName||'')+'</h3><div class="pr-svg">'+document.getElementById('chart').outerHTML+'</div>'
-      +'<div class="pr-cap">'+(pairCaption.textContent||'')+' · 점선: 임계·제한 기준 · 주황 막대: 기준 초과일</div></div>'
-      +(insRows? '<div class="pr-sec"><h3>차트 해석</h3><table class="pr-tb">'+insRows+'</table></div>':'')
-      +'<div class="pr-sec"><h3>식이 분석 총평 · 최근 4주</h3><table class="pr-tb">'
-      +b.ai.map(function(a){ return '<tr><td class="lbl">'+a.tag+'</td><td>'+a.tx+'</td></tr>'; }).join('')
-      +'</table></div>'
-      +(b.top3.length? '<div class="pr-sec"><h3>고위험 식사 TOP '+Math.min(3,b.top3.length)+' · 최근 4주</h3><div class="pr-top3">'
-        +b.top3.slice(0,3).map(function(t,i){ return '<div class="pr-meal">'+(MEAL_IMG[t.nm]?'<img src="'+MEAL_IMG[t.nm]+'" alt="">':'')+'<div style="min-width:0"><div class="nm">'+(i+1)+'. '+t.nm+'</div><div class="sb">'+t.sub+'</div></div><span class="rk">'+t.chip+'</span></div>'; }).join('')
-        +'</div></div>':'')
-      +'<div class="pr-sec pr-cols">'
-      +'<div><h3>환자 실천 과제</h3>'+b.checks.map(function(c){ return '<div class="pr-li'+(c[0]?' done':'')+'"><span class="bx"></span><span>'+c[1].replace(/<[^>]*>/g,'')+'</span></div>'; }).join('')+'</div>'
-      +'<div><h3>검사 · 일정</h3>'+b.scheds.map(function(s){ return '<div class="pr-li"><span>'+s[0].replace(/<[^>]*>/g,'')+' — <b>'+s[1]+'</b></span></div>'; }).join('')+'</div>'
-      +'<div><h3>복용약 · 순응도 '+b.medAdh+'%</h3>'+b.meds.map(function(m2){ return '<div class="pr-li"><span>'+m2[0]+' — '+m2[1]+'</span></div>'; }).join('')+'</div>'
+      '<div class="pr-hd"><div><div class="pr-brand">신신당부</div><div class="pr-t">'+p.nm+'님의 건강 리포트</div>'
+      +'<div class="pr-sub">'+b.stage.label+' · 발행 2026-07-29 · 담당의 이종수 (신촌힘찬병원 신장내과) · 최근 한 달 기록률 <b>'+b.recRate+'%</b></div></div>'
+      +(nx? '<div class="pr-dday"><div class="l">다음 진료까지</div><div class="d">'+(dd||nx[1])+'</div><div class="w">'+nx[1]+'</div></div>':'')
       +'</div>'
-      +'<div class="pr-foot"><span>본 리포트는 신신당부 의료진용 대시보드에서 생성되었습니다 · 데모 데이터(합성)</span><span>ⓒ Mediology Inc. · 서명: ____________</span></div>';
+      +(cmt? '<div class="pr-cmt"><div class="who">담당의 선생님의 한마디</div>'+cmt+'</div>':'')
+      +'<div class="pr-2col">'
+      +'<div><h3 style="font-size:11px;font-weight:900;color:#3563E9;margin-bottom:2px">검사 결과, 쉽게 말씀드리면</h3>'
+      +stats.map(function(s){ return '<div class="pr-stat"><span class="pill '+(s.ok?'ok':'watch')+'">'+(s.ok?'좋아요':'살펴봐요')+'</span><div><div class="nm2">'+s.nm+' — <b>'+s.v+s.u+'</b></div><div class="ex2">'+s.ex+'</div></div></div>'; }).join('')
+      +'</div>'
+      +'<div><h3 style="font-size:11px;font-weight:900;color:#3563E9;margin-bottom:2px">하루 식사 목표</h3>'
+      +goals.map(function(g){ return '<div class="pr-goal"><span class="gk">'+g[0]+'</span><b>'+g[1]+'</b><span class="gt">'+g[2]+'</span></div>'; }).join('')
+      +(avoid.length? '<h3 style="font-size:11px;font-weight:900;color:#3563E9;margin:10px 0 2px">최근 기록에서 조심하면 좋은 음식</h3><div class="pr-chips2">'+avoid.map(function(a){ return '<span>'+a+'</span>'; }).join('')+'</div>':'')
+      +'</div></div>'
+      +(checked.length? '<div class="pr-sec pr-prom"><h3>선생님과 약속한 실천 '+checked.length+'가지</h3>'
+        +checked.map(function(c,i){ return '<div class="it"><span class="no">'+(i+1)+'</span><span>'+c+'</span></div>'; }).join('')+'</div>':'')
+      +(b.scheds.length? '<div class="pr-sec"><h3>다가오는 일정</h3><div class="pr-sched">'
+        +b.scheds.map(function(s){ var t=s[0].replace(/<[^>]*>/g,''), d2=ddOf(s[1]);
+          return '<div class="s"><b>'+t+'</b>'+s[1]+(d2?'<span class="dd">'+d2+'</span>':'')+'</div>'; }).join('')+'</div></div>':'')
+      +'<div class="pr-foot"><span>신신당부 앱에 매일 식사를 기록하면 다음 진료가 더 정확해집니다 · 궁금한 점은 진료 때 함께 물어보세요</span><span>ⓒ Mediology · 데모 데이터</span></div>';
   }
   document.addEventListener('click',function(e){
     if(e.target && (e.target.id==='pdfReport' || e.target.id==='pdfSave')){
