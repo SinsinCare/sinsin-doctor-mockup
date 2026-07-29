@@ -506,6 +506,77 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .pr-sched .s b{display:block; font-size:9.5px; color:#5B6472; font-weight:700}
 .pr-sched .dd{color:#3563E9; font-weight:800; margin-left:4px}
 .pr-foot{margin-top:12px; border-top:1px solid #C9D2E3; padding-top:6px; font-size:8.5px; color:#5B6472; display:flex; justify-content:space-between}
+
+/* ══ v3 스킨 — One Primary(#3563E9) + Grayscale · Borderless · Shadowless · Full-width ══ */
+:root{
+  --g50:#FAFBFC; --g75:#F4F5F8; --g100:#EDEFF4; --g200:#E1E4EB; --g300:#C8CDD9;
+  --border:transparent; --border2:transparent;   /* 위계는 보더가 아니라 면(톤)으로 */
+  --shadow-sm:none; --shadow:none;
+  --ground:#EDEFF4; --ground-tint:none;
+  --surface2:var(--g75); --mute-bg:var(--g100);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --g50:#191D27; --g75:#1F242F; --g100:#262C39; --g200:#303747; --g300:#465067;
+  --border:transparent; --border2:transparent; --shadow-sm:none; --shadow:none;
+  --ground:#12151D; --ground-tint:none; --surface2:var(--g75); --mute-bg:var(--g100);
+} }
+:root[data-theme="dark"]{
+  --g50:#191D27; --g75:#1F242F; --g100:#262C39; --g200:#303747; --g300:#465067;
+  --border:transparent; --border2:transparent; --shadow-sm:none; --shadow:none;
+  --ground:#12151D; --ground-tint:none; --surface2:var(--g75); --mute-bg:var(--g100);
+}
+:root[data-theme="light"]{
+  --g50:#FAFBFC; --g75:#F4F5F8; --g100:#EDEFF4; --g200:#E1E4EB; --g300:#C8CDD9;
+  --border:transparent; --border2:transparent; --shadow-sm:none; --shadow:none;
+  --ground:#EDEFF4; --ground-tint:none; --surface2:var(--g75); --mute-bg:var(--g100);
+}
+/* 풀폭 앱셸 — 바깥 여백 제거, 화면 전체 사용 */
+body{padding:0; background:var(--ground)}
+.wrap{max-width:none; margin:0}
+.frame{height:100vh; border:0; border-radius:0; overflow:hidden}
+.main{background:var(--ground)}
+.sidebar{background:var(--surface)}
+/* 카드: 면으로만 구분, 시작선 정렬을 위한 패딩 통일 */
+.card{border:0; box-shadow:none; padding:20px}
+.card .card-hd{margin-bottom:12px}
+.subview{padding:20px 24px 0; gap:20px}
+/* 헤더 타일·칩: 흰 카드 위 회색 면 */
+.vital{border:0; box-shadow:none; background:var(--g75)}
+.vital.watch{border:0; background:#FCF6EC}
+.vital.alert{border:0}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .vital.watch{background:#332A18} }
+:root[data-theme="dark"] .vital.watch{background:#332A18}
+:root[data-theme="light"] .vital.watch{background:#FCF6EC}
+.lim-chip{border:0; background:var(--g100)}
+.lim-edit{background:var(--blue-tint)}
+.lim-edit .lim-chip{background:var(--surface); box-shadow:none}
+/* 컨트롤 */
+.seg{border:0; background:var(--g100); border-radius:10px}
+.seg button.on{background:var(--surface); box-shadow:none}
+.btn{border:0; background:var(--g100); box-shadow:none}
+.btn.primary{background:var(--btn-bg); color:var(--btn-fg)}
+.mini-btn{border:0; background:var(--g100)}
+.mini-btn.accept{background:var(--blue); color:#fff}
+.thr-input, .range-row input{border:0; background:var(--g100)}
+.thr-input:focus-visible, .range-row input:focus-visible, textarea:focus-visible{outline:2px solid var(--blue); outline-offset:1px}
+textarea{border:0 !important; background:var(--g75) !important}
+/* 표: 보더 대신 지브라 + 타이포 위계 */
+.wtable thead th{border-bottom:1px solid var(--g200); color:var(--ink3)}
+.wtable td{border-bottom:0 !important}
+.wtable tbody tr:nth-child(even) td{background:var(--g50)}
+.wtable tr.rowlink:hover td{background:var(--blue-tint)}
+.wtable tr.sel td{background:var(--blue-tint)}
+/* 플랫 리스트 블록 (총평·끼니·TOP5·타일) — 회색 면 */
+.ai-line, .dm-row, .t5, .tot-tile, .meal, .pr-meal{border:0; background:var(--g75)}
+.tot-tile.ex, .dm-row.ex{background:var(--accent-bg)}
+.t5:hover{background:var(--blue-tint)}
+/* 패널·모달: 오버레이 딤 + 플랫 화이트 */
+.modal{border:0; box-shadow:none}
+.notif-panel{border:0 !important; box-shadow:none !important}
+.day-panel{background:var(--surface)}
+/* 사이드바 항목 */
+.pt-item, .pt{border:0}
+
 </style>
 
 <div class="wrap">
