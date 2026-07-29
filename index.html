@@ -13,7 +13,7 @@
   --btn-bg:#3563E9; --btn-fg:#FFFFFF;
   --lab:#3563E9; --intake:#8FA9F2;
   --mute:#666E82; --mute-bg:#EEF0F5;
-  --accent:#EE8A2F; --accent-deep:#B35C09; --accent-bg:#FBF0DE;
+  --accent:#EE8A2F; --accent-deep:#AC5701; --accent-bg:#FCF1DF;
   --accent-band:rgba(238,138,47,.14); --accent-band-line:rgba(196,116,26,.45);
   --shadow-sm:0 1px 2px rgba(26,32,50,.05);
   --shadow:0 1px 2px rgba(26,32,50,.04), 0 10px 28px rgba(26,32,50,.06);
@@ -113,7 +113,9 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .pt-row.sel{background:var(--blue-tint); border-color:var(--blue-tint2)}
 .pt-row .nm{font-weight:700; font-size:12.5px; display:flex; align-items:center; gap:4px; flex-wrap:wrap}
 .pt-row .meta{font-size:10.5px; color:var(--ink3); margin-top:2px}
-.flag{font-size:10px; font-weight:800; color:var(--accent-deep); background:var(--accent-bg); border-radius:999px; padding:2px 8px}
+.flag{font-size:10px; font-weight:800; color:var(--ink2); background:var(--g100); border-radius:999px; padding:2px 8px} /* 기본=그레이(정보) */
+.flag.warn{color:var(--accent-deep); background:var(--accent-bg)}
+.flag.crit{color:#fff; background:var(--accent-deep)}
 .flag.gray{color:var(--mute); background:var(--mute-bg)}
 .mini-btn{font-size:11px; font-weight:700; color:var(--ink2); border:1px solid var(--border); background:var(--surface);
   border-radius:8px; padding:4px 12px; cursor:pointer}
@@ -157,7 +159,7 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .pt-facts{display:flex; align-items:center; flex-wrap:wrap; gap:8px; color:var(--ink2); font-size:12.5px; margin-top:4px}
 .badge{display:inline-flex; align-items:center; font-weight:800; font-size:11.5px; border-radius:999px; padding:2px 12px}
 .badge.stage{background:var(--blue-tint); color:var(--blue)}
-.badge.crit{background:var(--accent-bg); color:var(--accent-deep)}
+.badge.crit{background:var(--accent-deep); color:#fff}
 .badge.warn{background:var(--accent-bg); color:var(--accent-deep)}
 .badge.gray{background:var(--mute-bg); color:var(--mute)}
 .sep{color:var(--border); font-size:11px}
@@ -202,7 +204,7 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .tot-tile .tp b.ex{color:var(--accent-deep)}
 .lim-select{border:0; background:transparent; font:inherit; font-size:11.5px; font-weight:800; color:var(--ink); outline:none; cursor:pointer}
 .hist{font-size:10.5px; font-weight:700; border-radius:999px; padding:2px 8px}
-.hist.ok{background:#E4F4EB; color:#1F8A52}
+.hist.ok{background:#E7F7EE; color:#19864F}
 .hist.no{background:var(--mute-bg); color:var(--mute)}
 :root:not([data-theme="light"]) .hist.ok{background:#173B28; color:#7FD6A4}
 .pw-err{font-size:11px; color:#C0392B; margin-top:8px; font-weight:700}
@@ -318,17 +320,17 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .ai-line .ai-v{flex:none; font-weight:600; margin-top:1px}
 .ai-line .ai-d{flex:1; color:var(--ink2); margin-top:1px; padding-left:10px; border-left:2px solid var(--border); min-width:0}
 /* 영양소 식별 컬러 (경고 오렌지·프라이머리 블루와 분리된 identity 색) — 커스텀 프로퍼티로 캐스케이드 안전하게 */
-.nc-prot{--nc-bg:#F1ECFD; --nc-fg:#6A4BD8}
-.nc-na{--nc-bg:#FCF4AE; --nc-fg:#8A6A00}
-.nc-k{--nc-bg:#E4F4EB; --nc-fg:#1F8A52}
-.nc-p{--nc-bg:#FBE9F0; --nc-fg:#C4426B}
+.nc-prot{--nc-bg:#F4EFFF; --nc-fg:#7052E0}
+.nc-na{--nc-bg:#FDF5AF; --nc-fg:#8D6C06}
+.nc-k{--nc-bg:#E7F7EE; --nc-fg:#19864F}
+.nc-p{--nc-bg:#FFEDF4; --nc-fg:#BC3A64}
 .nc-rec{--nc-bg:var(--mute-bg); --nc-fg:var(--mute)}
 .nc-water{--nc-bg:#E3EEFB; --nc-fg:#1D66B8}
 .m[class*="nc-"], .chips span[class*="nc-"], .badge[class*="nc-"], .flag[class*="nc-"]{background:var(--nc-bg); color:var(--nc-fg)}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .nc-water{--nc-bg:#1D3350; --nc-fg:#8FBCF0}
-  :root:not([data-theme="light"]) .nc-prot{--nc-bg:#2B2452; --nc-fg:#B9A5F8}
-  :root:not([data-theme="light"]) .nc-na{--nc-bg:#3E3708; --nc-fg:#EFDC77}
+  :root:not([data-theme="light"]) .nc-prot{--nc-bg:#2B2452; --nc-fg:#C8B8FF}
+  :root:not([data-theme="light"]) .nc-na{--nc-bg:#3E3708; --nc-fg:#D8C560}
   :root:not([data-theme="light"]) .nc-k{--nc-bg:#143726; --nc-fg:#5CC08E}
   :root:not([data-theme="light"]) .nc-p{--nc-bg:#3D1B28; --nc-fg:#F58BA8}
 }
@@ -337,7 +339,7 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 :root[data-theme="dark"] .nc-k{--nc-bg:#143726; --nc-fg:#5CC08E}
 :root[data-theme="dark"] .nc-p{--nc-bg:#3D1B28; --nc-fg:#F58BA8}
 :root[data-theme="light"] .nc-prot{--nc-bg:#F1ECFD; --nc-fg:#6A4BD8}
-:root[data-theme="light"] .nc-na{--nc-bg:#FCF4AE; --nc-fg:#8A6A00}
+:root[data-theme="light"] .nc-na{--nc-bg:#FDF5AF; --nc-fg:#8D6C06}
 :root[data-theme="light"] .nc-k{--nc-bg:#E4F4EB; --nc-fg:#1F8A52}
 :root[data-theme="light"] .nc-p{--nc-bg:#FBE9F0; --nc-fg:#C4426B}
 .top3{display:flex; flex-direction:column; gap:8px}
@@ -576,6 +578,37 @@ textarea{border:0 !important; background:var(--g75) !important}
 .day-panel{background:var(--surface)}
 /* 사이드바 항목 */
 .pt-item, .pt{border:0}
+/* ── 반응형 정비: 단계적 강하 (풀폭 유지) ── */
+.grid{grid-template-columns:1.62fr minmax(300px,1fr)}         /* 홈 우측 칼럼 최소폭 보장 */
+.top5-grid{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))} /* TOP5: 좁아지면 줄바꿈, 압착 금지 */
+.top5-grid.n1{grid-template-columns:minmax(0,320px)}
+.top5-grid.n2,.top5-grid.n3,.top5-grid.n4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+@media (max-width:1280px){
+  .dgrid{grid-template-columns:1fr 1fr}                        /* 하단 3열 → 2열 */
+  .diet-grid2{grid-template-columns:minmax(0,1fr) 340px}       /* 상세 패널 축소 유지 */
+}
+@media (max-width:1080px){
+  .grid{grid-template-columns:1fr}
+  .dgrid{grid-template-columns:1fr 1fr}
+  .diet-grid2{grid-template-columns:1fr}
+  .day-panel{position:static}
+  .note-grid{grid-template-columns:1fr}
+  .set-grid{grid-template-columns:1fr}
+}
+@media (max-width:960px){
+  .dgrid{grid-template-columns:1fr}                            /* 2열 → 1열 */
+  .subview{padding:16px 16px 0}
+  .grid{padding:16px 16px 0}
+}
+@media (max-width:900px){
+  .sidebar{display:none} /* 베이스 display:flex보다 뒤에 두어 캐스케이드 확정 */
+  .frame{grid-template-columns:1fr; height:auto; min-height:100vh}
+  .main{height:auto; overflow:visible}
+  .vitals{gap:6px}
+  .vital{min-width:calc(33.3% - 6px)}                          /* 수치 타일 3열 정렬 */
+  .top5-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+  .pr-2col{grid-template-columns:1fr}
+}
 
 </style>
 
@@ -1119,12 +1152,12 @@ textarea{border:0 !important; background:var(--g75) !important}
     // ── 배지 ──
     var badges=[];
     if(/투석/.test(ft)) badges.push(['투석 준비','crit']);
-    if(kEnd>=5.5) badges.push(['K 임계 초과','nc-k']);
-    else if(kEnd>=5.0) badges.push(['K 2주 연속 상승','nc-k']);
-    if(pFlag) badges.push(['P 임계 초과','nc-p']);
+    if(kEnd>=5.5) badges.push(['K 임계 초과','crit']);
+    else if(kEnd>=5.0) badges.push(['K 2주 연속 상승','warn']);
+    if(pFlag) badges.push(['P 임계 초과','crit']);
     if(/BP/.test(ft)) badges.push(['혈압 목표 초과','warn']);
     if(/체중/.test(ft)) badges.push(['체중 급증 · 부종 의심','warn']);
-    if(/UACR/.test(ft)) badges.push(['알부민뇨 진행','nc-prot']);
+    if(/UACR/.test(ft)) badges.push(['알부민뇨 진행','warn']);
     if(/HbA1c/.test(ft)) badges.push(['혈당 조절 불충분','warn']);
     if(p.stop) badges.push(['기록 중단 '+p.stop+'일','gray']);
     badges=badges.slice(0,2);
@@ -1595,14 +1628,12 @@ textarea{border:0 !important; background:var(--g75) !important}
   var sortKey='warn', selIdx=0;
   function order(){ return PATIENTS.map(function(_,i){return i;}).sort(function(a,b){ return SORTERS[sortKey](PATIENTS[a],PATIENTS[b]); }); }
   function stShort(st){ return st==='G2'?'CKD 2기':st==='G4'?'CKD 4기':st==='G5'?'CKD 5기':'CKD '+st; }
-  function flagCls(f){
-    if(f[1]) return ' '+f[1];
+  function flagCls(f){ // 배지 시맨틱: 그레이=정보 · warn=주의 · crit=위험 (영양소색은 데이터 식별 전용이라 배지에서 제외)
+    if(f[1]==='gray') return ' ';
     var t=f[0];
-    if(/^P/.test(t)) return ' nc-p';
-    if(/^K/.test(t)) return ' nc-k';
-    if(/^Na/.test(t)) return ' nc-na';
-    if(/UACR/.test(t)) return ' nc-prot';
-    return '';
+    if(/투석|기록 중단/.test(t)) return ' ';
+    if(/초과|5\.[5-9]|HbA1c|BP 1[4-9]/.test(t)) return ' crit';
+    return ' warn';
   }
   function renderPts(q){
     ptList.innerHTML=order().filter(function(i){ return !q||PATIENTS[i].nm.indexOf(q)>=0; }).map(function(i){
