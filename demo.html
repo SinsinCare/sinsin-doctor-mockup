@@ -1111,9 +1111,11 @@ body{padding:28px 20px}
     ai.push( fluid.mode==='limit'
       ? {nc:'water',tag:'수분',tx:'평균 <b>'+fmt(fluid.avg)+'mL/일</b> — 제한 '+fmt(fluid.ml)+'mL, 초과 '+fluid.ex+'일. '+(fluid.avg>fluid.ml?'제한 준수 독려 필요.':'대체로 준수 중.')}
       : {nc:'water',tag:'수분',tx:'해당 없음 — 수분 제한 미설정(기록만).'});
-    if(sgS){ var sgRec=[]; for(var q3=N-31;q3<N;q3++) if(sgS[q3]>0) sgRec.push(sgS[q3]);
+    if(sgS){ var sgRec=[], sgEx=0; for(var q3=N-31;q3<N;q3++) if(sgS[q3]>0){ sgRec.push(sgS[q3]); if(sgS[q3]>180) sgEx++; }
       var sgAvg=sgRec.length? Math.round(sgRec.reduce(function(a2,b2){return a2+b2;},0)/sgRec.length):0;
-      ai.push({nc:'rec',tag:'혈당',tx: sgAvg? '자가혈당 평균 <b>'+sgAvg+'mg/dL</b> — 목표(180) '+(sgAvg>180?'초과. 식사 시간·탄수화물 점검 필요.':'이내.')+' HbA1c '+hbS[hbS.length-1].toFixed(1)+'%.'
+      ai.push({nc:'rec',tag:'혈당',tx: sgAvg
+        ? '자가혈당 평균 <b>'+sgAvg+'mg/dL</b> — 목표(180) '+(sgAvg>180?'초과':'이내')+', 초과 '+sgEx+'일. '
+          +(sgEx>=7?'외식·국물 식사일과 겹치는지 차트에서 확인 필요.':sgEx>=3?'식사 시간 규칙화 권장.':'현 패턴 유지.')+' HbA1c '+hbS[hbS.length-1].toFixed(1)+'%.'
         : 'HbA1c <b>'+hbS[hbS.length-1].toFixed(1)+'%</b> — 자가혈당 기록 없음, 기록 독려.'});
     }
     // 섭취 5줄(단백질·Na·K·P·수분)은 항상 고정 노출, 기록 줄은 필요 시 추가 (최대 6줄)
