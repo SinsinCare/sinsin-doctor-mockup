@@ -115,7 +115,7 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .pt-row .meta{font-size:10.5px; color:var(--ink3); margin-top:2px}
 .flag{font-size:10px; font-weight:800; color:var(--ink2); background:var(--g100); border-radius:999px; padding:2px 8px} /* 기본=그레이(정보) */
 .flag.warn{color:var(--accent-deep); background:var(--accent-bg)}
-.flag.crit{color:#fff; background:var(--accent-deep)}
+.flag.crit{color:#8A4504; background:#F7DFC0}
 .flag.gray{color:var(--mute); background:var(--mute-bg)}
 .mini-btn{font-size:11px; font-weight:700; color:var(--ink2); border:1px solid var(--border); background:var(--surface);
   border-radius:8px; padding:4px 12px; cursor:pointer}
@@ -159,7 +159,7 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .pt-facts{display:flex; align-items:center; flex-wrap:wrap; gap:8px; color:var(--ink2); font-size:12.5px; margin-top:4px}
 .badge{display:inline-flex; align-items:center; font-weight:800; font-size:11.5px; border-radius:999px; padding:2px 12px}
 .badge.stage{background:var(--blue-tint); color:var(--blue)}
-.badge.crit{background:var(--accent-deep); color:#fff}
+.badge.crit{background:#F7DFC0; color:#8A4504}
 .badge.warn{background:var(--accent-bg); color:var(--accent-deep)}
 .badge.gray{background:var(--mute-bg); color:var(--mute)}
 .sep{color:var(--border); font-size:11px}
@@ -195,6 +195,7 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .md-tothd{font-size:11px; font-weight:800; color:var(--ink3); margin:14px 0 6px}
 .tot-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
 .tot-tile{border:1px solid var(--border2); border-radius:10px; background:var(--surface2); padding:7px 10px; display:flex; flex-direction:column; gap:3px; align-items:flex-start}
+.meal-detail .tot-tile{background:var(--surface)}
 .tot-tile.ex{border-color:var(--accent-band-line); background:var(--accent-band)}
 .tot-tile .tr1{display:flex; align-items:center; gap:6px}
 .tot-tile .tv{font-size:12.5px; font-weight:700; color:var(--ink); font-variant-numeric:tabular-nums}
@@ -285,7 +286,7 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .chart-wrap svg{display:block; width:100%; min-width:560px; height:auto}
 .tip{position:absolute; pointer-events:none; background:var(--ink); color:var(--surface); font-size:11px; font-weight:600;
   border-radius:var(--r-sm); padding:4px 8px; opacity:0; transform:translate(-50%,-115%); white-space:nowrap; transition:opacity .08s; z-index:5; font-variant-numeric:tabular-nums}
-.meal-detail{margin-top:12px; border:1px solid var(--accent-band-line); background:var(--accent-bg); border-radius:var(--r-md); padding:12px 16px 16px; display:none}
+.meal-detail{margin-top:12px; border:0; background:var(--surface2); border-radius:var(--r-md); padding:12px 16px 16px; display:none}
 .meal-detail.show{display:block}
 .md-head{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
 .md-date{font-size:12px; font-weight:600; color:var(--ink2)}
@@ -336,6 +337,8 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 }
 :root[data-theme="dark"] .nc-prot{--nc-bg:#2B2452; --nc-fg:#B9A5F8}
 :root[data-theme="dark"] .nc-na{--nc-bg:#3E3708; --nc-fg:#EFDC77}
+:root[data-theme="dark"] .flag.crit, :root[data-theme="dark"] .badge.crit{background:#4A3512; color:#F6B570}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .flag.crit, :root:not([data-theme="light"]) .badge.crit{background:#4A3512; color:#F6B570} }
 :root[data-theme="dark"] .nc-k{--nc-bg:#143726; --nc-fg:#5CC08E}
 :root[data-theme="dark"] .nc-p{--nc-bg:#3D1B28; --nc-fg:#F58BA8}
 :root[data-theme="light"] .nc-prot{--nc-bg:#F1ECFD; --nc-fg:#6A4BD8}
@@ -440,7 +443,9 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .modal{width:560px; max-width:100%; max-height:84vh; overflow-y:auto; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px; box-shadow:var(--shadow)}
 .modal-hd{display:flex; align-items:flex-start; gap:8px}
 .modal-img{width:176px; height:176px; object-fit:cover; border-radius:var(--r-md); margin-top:12px; display:block}
-.insight{margin-top:12px; border:1px solid var(--border2); background:var(--surface2); border-radius:var(--r-md); padding:12px 16px; display:flex; flex-direction:column; gap:8px}
+.insight{margin-top:12px; border:0; background:var(--blue-tint); border-radius:var(--r-md); padding:14px 16px; display:flex; flex-direction:column; gap:8px}
+.ins-hd{font-size:12.5px; font-weight:900; color:var(--blue); display:flex; align-items:baseline; gap:8px}
+.ins-hd .sub{font-size:10.5px; font-weight:600; color:var(--ink3)}
 .ins-row{display:flex; gap:12px; font-size:12.5px; align-items:flex-start}
 .ins-tag{flex:none; width:72px; font-size:10px; font-weight:800; letter-spacing:.08em; color:var(--ink3); text-transform:uppercase; padding-top:3px}
 .ins-row p{margin:0; color:var(--ink2); line-height:1.6; min-width:0}
@@ -1158,7 +1163,7 @@ body{padding:28px 20px}
     meds=meds.slice(0,4);
     // ── 배지 ──
     var badges=[];
-    if(/투석/.test(ft)) badges.push(['투석 준비','crit']);
+    if(/투석/.test(ft)) badges.push(['투석 준비','gray']);
     if(kEnd>=5.5) badges.push(['K 임계 초과','crit']);
     else if(kEnd>=5.0) badges.push(['K 2주 연속 상승','warn']);
     if(pFlag) badges.push(['P 임계 초과','crit']);
@@ -1396,7 +1401,8 @@ body{padding:28px 20px}
     else if(!worse&&chronicOver) corr='<span class="ins-badge mute">수치는 아직 안정</span><span class="ins-tx">'+exTxt+'에도 수치는 안정적입니다 — 축적 위험이 있어 지속 관찰과 식이 교정 병행을 권합니다.</span>';
     else corr='<span class="ins-badge mute">식이·수치 안정</span><span class="ins-tx">섭취와 수치가 모두 기준 안에서 유지되고 있습니다.</span>';
     box.innerHTML =
-      '<div class="ins-row"><span class="ins-tag">상태</span><p>'+state+'</p></div>'
+      '<div class="ins-hd">이번 수치 해석과 관리 방향<span class="sub">최근 채혈 · 4주 식이 기준</span></div>'
+      +'<div class="ins-row"><span class="ins-tag">상태</span><p>'+state+'</p></div>'
       +'<div class="ins-row"><span class="ins-tag">식이 연관성</span><p>'+corr+'</p></div>'
       +'<div class="ins-row"><span class="ins-tag">관리</span><p>'+manage+'</p></div>';
   }
