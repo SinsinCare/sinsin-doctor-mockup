@@ -20,6 +20,7 @@ steps:
         test -s demo.html
         test -s HANDOFF.md
         test -s API.md
+        test -s ESTIMATE_AND_API_REVIEW.md
 
   - id: Build image
     name: gcr.io/cloud-builders/docker

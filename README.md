@@ -13,6 +13,7 @@ CKD(만성신장질환) 환자 식이·예후 관리 솔루션 **신신당부**�
 
 - **[HANDOFF.md](HANDOFF.md)** — 프론트엔드 재구현 가이드 (스택·화면 구조·데이터 규칙·디자인 토큰·마일스톤·인수 기준)
 - **[API.md](API.md)** — 서버 데이터 계약 초안 (타입·엔드포인트·서버/클라 책임 분담·CGM 예약)
+- **[ESTIMATE_AND_API_REVIEW.md](ESTIMATE_AND_API_REVIEW.md)** — M1~M5 기간·비용 견적과 API 계약 수정 제안
 - `index.html` / `demo.html`은 참조 구현 — 동작 기준이며, 이어서 개발하지 않습니다
 
 ## Cloud Run 배포

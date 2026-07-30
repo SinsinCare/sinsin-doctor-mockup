@@ -1,7 +1,7 @@
 FROM nginx:1.27.5-alpine
 
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY index.html demo.html HANDOFF.md API.md README.md /usr/share/nginx/html/
+COPY index.html demo.html HANDOFF.md API.md ESTIMATE_AND_API_REVIEW.md README.md /usr/share/nginx/html/
 
 USER nginx
 
