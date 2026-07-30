@@ -196,12 +196,13 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .tot-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
 .tot-tile{border:1px solid var(--border2); border-radius:10px; background:var(--surface2); padding:7px 10px; display:flex; flex-direction:column; gap:3px; align-items:flex-start}
 .meal-detail .tot-tile{background:var(--surface)}
-.tot-tile.ex{border-color:var(--accent-band-line); background:var(--accent-band)}
+.tot-tile.ex{border-color:transparent}
 .tot-tile .tr1{display:flex; align-items:center; gap:6px}
 .tot-tile .tv{font-size:12.5px; font-weight:700; color:var(--ink); font-variant-numeric:tabular-nums}
 .tot-tile .tv .tu{font-size:9.5px; font-weight:600; color:var(--ink2); margin-left:1px}
 .tot-tile .tp{font-size:10px; color:var(--ink2)}
-.tot-tile.ex .tp{color:var(--accent-deep); opacity:.85}
+.tot-tile.ex .tp{color:var(--ink2)}
+.tot-tile.ex .tv{color:var(--accent-deep)} /* 초과 = 값 색으로만, 배경 얼룩 금지 */
 .tot-tile .tp b.ex{color:var(--accent-deep)}
 .lim-select{border:0; background:transparent; font:inherit; font-size:11.5px; font-weight:800; color:var(--ink); outline:none; cursor:pointer}
 .hist{font-size:10.5px; font-weight:700; border-radius:999px; padding:2px 8px}
@@ -274,9 +275,9 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .caption-row{display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:8px}
 .pair-caption{font-size:11.5px; color:var(--ink3); flex:1; min-width:0}
 .pair-caption b{color:var(--ink2)}
-.md-foot{display:flex; align-items:center; gap:12px; margin-top:8px; flex-wrap:wrap}
+.md-foot{display:flex; align-items:center; gap:12px; margin-top:14px; padding-right:4px; flex-wrap:wrap}
 .md-foot .md-tot{margin-top:0; flex:1; min-width:0}
-.md-go{border:0; background:none; color:var(--blue); font-weight:700; font-size:12px; cursor:pointer; padding:0; white-space:nowrap; font-family:inherit}
+.md-go{border:0; background:var(--blue-tint); border-radius:999px; color:var(--blue); font-weight:800; font-size:12px; cursor:pointer; padding:6px 14px; white-space:nowrap; font-family:inherit}
 .md-go:hover{text-decoration:underline; text-underline-offset:3px}
 .md-go:focus-visible{outline:2px solid var(--blue); outline-offset:2px; border-radius:4px}
 .toast{position:fixed; left:50%; bottom:32px; transform:translateX(-50%); background:var(--ink); color:var(--surface);
@@ -580,7 +581,9 @@ textarea{border:0 !important; background:var(--g75) !important}
 .wtable tr.sel td{background:var(--blue-tint)}
 /* 플랫 리스트 블록 (총평·끼니·TOP5·타일) — 회색 면 */
 .ai-line, .dm-row, .t5, .tot-tile, .meal, .pr-meal{border:0; background:var(--g75)}
-.tot-tile.ex, .dm-row.ex{background:var(--accent-bg)}
+.dm-row.ex{background:var(--accent-bg)}
+.tot-tile.ex{background:var(--surface2)}
+.meal-detail .tot-tile.ex{background:var(--surface)}
 .t5:hover{background:var(--blue-tint)}
 /* 패널·모달: 오버레이 딤 + 플랫 화이트 */
 .modal{border:0; box-shadow:none}
