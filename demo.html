@@ -328,11 +328,11 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .nc-p{--nc-bg:#FFEDF4; --nc-fg:#BC3A64}
 .nc-rec{--nc-bg:var(--mute-bg); --nc-fg:var(--mute)}
 .nc-water{--nc-bg:#E3EEFB; --nc-fg:#1D66B8}
-.nc-glu{--nc-bg:#FFEBE7; --nc-fg:#BD4238} /* 혈당 코럴 — 로즈(h5)·앰버(h55) 사이 h28, OKLCH L .55/.955 */
+.nc-glu{--nc-bg:#FEECE5; --nc-fg:#BC461E} /* 혈당 오렌지 코럴 — h38 (로즈 h5와 33°·앰버 h55와 17°), OKLCH L .55/.955 */
 .m[class*="nc-"], .chips span[class*="nc-"], .badge[class*="nc-"], .flag[class*="nc-"]{background:var(--nc-bg); color:var(--nc-fg)}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .nc-water{--nc-bg:#1D3350; --nc-fg:#8FBCF0}
-  :root:not([data-theme="light"]) .nc-glu{--nc-bg:#44241F; --nc-fg:#FEABA0}
+  :root:not([data-theme="light"]) .nc-glu{--nc-bg:#43241B; --nc-fg:#FEAD94}
   :root:not([data-theme="light"]) .nc-prot{--nc-bg:#2B2452; --nc-fg:#C8B8FF}
   :root:not([data-theme="light"]) .nc-na{--nc-bg:#3E3708; --nc-fg:#D8C560}
   :root:not([data-theme="light"]) .nc-k{--nc-bg:#143726; --nc-fg:#5CC08E}
@@ -341,8 +341,8 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 :root[data-theme="dark"] .nc-prot{--nc-bg:#2B2452; --nc-fg:#B9A5F8}
 :root[data-theme="dark"] .nc-na{--nc-bg:#3E3708; --nc-fg:#EFDC77}
 :root[data-theme="dark"] .flag.crit, :root[data-theme="dark"] .badge.crit{background:#4A3512; color:#F6B570}
-:root[data-theme="dark"] .nc-glu{--nc-bg:#44241F; --nc-fg:#FEABA0}
-:root[data-theme="light"] .nc-glu{--nc-bg:#FFEBE7; --nc-fg:#BD4238}
+:root[data-theme="dark"] .nc-glu{--nc-bg:#43241B; --nc-fg:#FEAD94}
+:root[data-theme="light"] .nc-glu{--nc-bg:#FEECE5; --nc-fg:#BC461E}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .flag.crit, :root:not([data-theme="light"]) .badge.crit{background:#4A3512; color:#F6B570} }
 :root[data-theme="dark"] .nc-k{--nc-bg:#143726; --nc-fg:#5CC08E}
 :root[data-theme="dark"] .nc-p{--nc-bg:#3D1B28; --nc-fg:#F58BA8}
