@@ -687,6 +687,7 @@ textarea{border:0 !important; background:var(--g75) !important}
               <button data-p="p" role="tab" aria-selected="false">인</button>
               <button data-p="renal" role="tab" aria-selected="false">단백질</button>
               <button data-p="na" role="tab" aria-selected="false">나트륨</button>
+              <button data-p="glu" id="presetGlu" role="tab" aria-selected="false" hidden>혈당</button>
             </div>
             <div class="seg" role="tablist" aria-label="표시 방식" id="modeSeg">
               <button class="on" data-m="abs" role="tab" aria-selected="true">실측값 · 분리</button>
@@ -1075,6 +1076,10 @@ textarea{border:0 !important; background:var(--g75) !important}
     var avg=function(arr){ var s=0; rec.forEach(function(x){s+=arr[x];}); return rec.length? s/rec.length:0; };
     var avgNa=r10(avg(na)), avgPr=Math.round(avg(pr)), gkg=Math.round(avgPr/w*100)/100;
     var maxNa=0; rec.forEach(function(x){ if(na[x]>maxNa) maxNa=na[x]; });
+    // ── 자가혈당(앱 기록) 일평균 — 당뇨 환자만. CGM 연동 전 단계 ──
+    var sgS=null;
+    if(hbS){ sgS=new Array(N); var eag=28.7*hbS[hbS.length-1]-46.7;
+      for(var gi=0; gi<N; gi++) sgS[gi] = miss[gi]? 0 : Math.round((eag + (r()-0.5)*64 + (na[gi]>lim.na?14:0))/2)*2; }
     // ── 수분 관리: 임상적 제한 대상(투석 전 G5, 부종) vs 기록만 ──
     var fluid = p.st==='G5'? {mode:'limit', ml:1000} : /체중/.test(ft)? {mode:'limit', ml:1200} : {mode:'record', ml:1200};
     if(fluid.mode==='limit'){
@@ -1099,6 +1104,11 @@ textarea{border:0 !important; background:var(--g75) !important}
     ai.push( fluid.mode==='limit'
       ? {nc:'water',tag:'수분',tx:'평균 <b>'+fmt(fluid.avg)+'mL/일</b> — 제한 '+fmt(fluid.ml)+'mL, 초과 '+fluid.ex+'일. '+(fluid.avg>fluid.ml?'제한 준수 독려 필요.':'대체로 준수 중.')}
       : {nc:'water',tag:'수분',tx:'해당 없음 — 수분 제한 미설정(기록만).'});
+    if(sgS){ var sgRec=[]; for(var q3=N-31;q3<N;q3++) if(sgS[q3]>0) sgRec.push(sgS[q3]);
+      var sgAvg=sgRec.length? Math.round(sgRec.reduce(function(a2,b2){return a2+b2;},0)/sgRec.length):0;
+      ai.push({nc:'rec',tag:'혈당',tx: sgAvg? '자가혈당 평균 <b>'+sgAvg+'mg/dL</b> — 목표(180) '+(sgAvg>180?'초과. 식사 시간·탄수화물 점검 필요.':'이내.')+' HbA1c '+hbS[hbS.length-1].toFixed(1)+'%.'
+        : 'HbA1c <b>'+hbS[hbS.length-1].toFixed(1)+'%</b> — 자가혈당 기록 없음, 기록 독려.'});
+    }
     // 섭취 5줄(단백질·Na·K·P·수분)은 항상 고정 노출, 기록 줄은 필요 시 추가 (최대 6줄)
     // ── 피해야 할 음식: ① 기록에서 발견 (실제 먹은 문제 식사 → 회피 라벨) ② 일반 권고 ──
     var eatenMeals=[]; zones.forEach(function(z){ eatenMeals.push(z.meal); });
@@ -1213,6 +1223,11 @@ textarea{border:0 !important; background:var(--g75) !important}
             caption:'<b>수축기 혈압 × 나트륨 섭취</b> — 염분 2g/day(KDIGO)·부종 관리 (혈청 Na 아님)', intake:na }
       }
     };
+    if(hbS){
+      built.presets.glu={ labName:'공복혈당 (검사)', labUnit:'mg/dL', lab:fpgS, labDom:[70,220], labTicks:3, labGuide:130, labGuideTxt:'목표|130 mg/dL',
+        inName:'자가혈당 (앱 기록 · 일평균)', inUnit:'mg/dL', inDom:[0,320], inTicks:3, inLimit:180, inLimitTxt:'목표|180 mg/dL',
+        caption:'<b>공복혈당 × 자가혈당(앱 기록)</b> — 혈당 조절 · CGM 연동 시 TIR(70~180 시간 비율)로 대체 예정', intake:sgS };
+    }
     BUILT[idx]=built; return built;
   }
 
@@ -1382,6 +1397,10 @@ textarea{border:0 !important; background:var(--g75) !important}
       worse=d<=-1; chronicOver=Math.round(b.presets.renal.intake.slice(N-31).filter(function(v){return v>0;}).length)>0 && (function(){var s=0,n2=0;for(var i2=N-31;i2<N;i2++){if(P.intake[i2]>0){s+=P.intake[i2];n2++;}}return n2&&(s/n2)>P.inLimit*1.05;})();
       state='eGFR <b>'+lastV+'</b> mL/min — 6개월간 '+(L.egfr[0]-lastV>0?'-'+(L.egfr[0]-lastV):'+'+(lastV-L.egfr[0]))+' 변화'+(worse?', 감소 지속':', 완만');
       manage='단백질 '+b.lim.prot+'g/일('+b.gkgLimit+'g/kg) 유지 · 혈압 조절 · NSAIDs 등 신독성 약물 회피';
+    } else if(preset==='glu'){
+      worse=d>=10; chronicOver=ex>=3;
+      state='공복혈당 <b>'+lastV+'</b> mg/dL — 목표(130) '+(lastV>130?'초과':'이내')+(worse?', 상승 추세':', 안정')+' · HbA1c '+last(b.labs.hb).toFixed(1)+'%';
+      manage='식사 시간 규칙화 · 저녁 탄수화물 조절'+((b.p.st==='G4'||b.p.st==='G5')?' · G4·5는 A1c 과소평가 — 공복혈당 병행 확인':'')+' · CGM 연동 예정';
     } else {
       worse=d>=3; chronicOver=ex>=3;
       state='수축기 혈압 <b>'+lastV+'</b> mmHg — 목표(130) '+(lastV>130?'초과':'이내')+(worse?', 상승 추세':'');
@@ -1458,6 +1477,12 @@ textarea{border:0 !important; background:var(--g75) !important}
   function renderPatient(idx){
     CUR=build(idx);
     dietSel=-1;
+    var pg=document.getElementById('presetGlu');
+    if(pg) pg.hidden = !CUR.presets.glu;
+    if(preset==='glu' && !CUR.presets.glu){
+      preset='k';
+      document.querySelectorAll('#presetSeg button').forEach(function(b2){ var on=b2.dataset.p==='k'; b2.classList.toggle('on',on); b2.setAttribute('aria-selected',on); });
+    }
     var b=CUR, p=b.p;
     document.getElementById('nameLine').innerHTML =
       '<span class="pt-name">'+p.nm+'</span><span class="badge stage">'+b.stage.label+'</span>'
