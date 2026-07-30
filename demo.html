@@ -659,9 +659,9 @@ body{padding:28px 20px}
     <p class="lg-sub">환자의 식이 기록과 검사 수치를 한 화면에서 봅니다</p>
     <div id="lgStep1">
       <label class="lg-label" for="lgEmail">이메일</label>
-      <input class="lg-input" id="lgEmail" type="email" value="js1129@yuhs.ac" autocomplete="username">
+      <input class="lg-input" id="lgEmail" type="email" value="jhlee@kidneasy.com" autocomplete="username">
       <label class="lg-label" for="lgPw">비밀번호</label>
-      <input class="lg-input" id="lgPw" type="password" value="demo-password" autocomplete="current-password">
+      <input class="lg-input" id="lgPw" type="password" value="kiney1" autocomplete="current-password">
       <div class="lg-row"><label class="lg-keep"><input type="checkbox" checked> 이 기기에서 자동 로그인</label><button class="lg-link" type="button">비밀번호 재설정</button></div>
       <button class="btn primary lg-btn" id="lgGo">로그인</button>
     </div>
@@ -1756,13 +1756,13 @@ body{padding:28px 20px}
   // ── 알림 패널 ──
   var REQUESTS=[
     {nm:'박영호', sx:'남 58세', via:'신촌힘찬병원 신장내과 검색', at:'오늘 09:12'},
-    {nm:'최미란', sx:'여 63세', via:'이종수 의사명 검색', at:'오늘 08:47'},
+    {nm:'최미란', sx:'여 63세', via:'이준혁 의사명 검색', at:'오늘 08:47'},
     {nm:'정대현', sx:'남 51세', via:'신촌힘찬병원 신장내과 검색', at:'어제 19:20'},
     {nm:'김옥자', sx:'여 71세', via:'신촌힘찬병원 검색', at:'어제 15:03'},
-    {nm:'이상철', sx:'남 66세', via:'이종수 의사명 검색', at:'어제 11:41'},
+    {nm:'이상철', sx:'남 66세', via:'이준혁 의사명 검색', at:'어제 11:41'},
     {nm:'한수정', sx:'여 45세', via:'신촌힘찬병원 신장내과 검색', at:'07/26 21:08'},
     {nm:'오병국', sx:'남 74세', via:'신촌힘찬병원 검색', at:'07/26 10:55'},
-    {nm:'서지연', sx:'여 39세', via:'이종수 의사명 검색', at:'07/25 17:32'}
+    {nm:'서지연', sx:'여 39세', via:'이준혁 의사명 검색', at:'07/25 17:32'}
   ];
   var notifBtn=document.getElementById('notifBtn'), notifPanel=document.getElementById('notifPanel'),
       notifClose=document.getElementById('notifClose'), reqList=document.getElementById('reqList'),
@@ -1838,11 +1838,11 @@ body{padding:28px 20px}
     mdOv.innerHTML='<div class="modal" role="dialog" aria-modal="true" aria-label="프로필 수정">'
       +'<div class="modal-hd"><div><span class="send-label">설정</span><b style="font-size:15px">프로필 수정</b></div><button class="notif-close modal-close" aria-label="닫기">✕</button></div>'
       +'<div style="margin-top:8px">'
-      +fr('pfName','이름','이종수')+fr('pfDept','소속','신촌힘찬병원 신장내과')+fr('pfTitle','직함','신장내과 전문의')+fr('pfMail','이메일','js1129@yuhs.ac')
-      +'<div class="set-row"><div class="d">면허번호<small>제 12345 호 — 변경은 고객센터를 통해서만 가능합니다</small></div></div>'
+      +fr('pfName','이름','이준혁')+fr('pfDept','소속','신촌힘찬병원 신장내과')+fr('pfTitle','직함','신장내과 전문의')+fr('pfMail','이메일','jhlee@kidneasy.com')
+      +'<div class="set-row"><div class="d">면허번호<small>제 910421 호 — 변경은 고객센터를 통해서만 가능합니다</small></div></div>'
       +'</div>'
       +'<div class="md-tothd" style="margin-top:12px">환자 검색 미리보기</div>'
-      +'<div class="dm-row" style="align-items:center"><div class="dm-img ph">'+MD_SVG.soup+'</div><div class="dm-info"><div class="dm-nm" id="pfPrev">신촌힘찬병원 신장내과 · 이종수</div><div class="dm-nut">환자가 병원·의사명으로 검색할 때 이렇게 표시됩니다</div></div></div>'
+      +'<div class="dm-row" style="align-items:center"><div class="dm-img ph">'+MD_SVG.soup+'</div><div class="dm-info"><div class="dm-nm" id="pfPrev">신촌힘찬병원 신장내과 · 이준혁</div><div class="dm-nut">환자가 병원·의사명으로 검색할 때 이렇게 표시됩니다</div></div></div>'
       +'<div class="pdf-row" style="padding:16px 0 0"><button class="btn modal-close">취소</button><button class="btn primary" id="pfSave">저장</button></div></div>';
     mdOv.classList.add('show');
     ['pfName','pfDept'].forEach(function(id){ document.getElementById(id).addEventListener('input',function(){
@@ -1926,7 +1926,7 @@ body{padding:28px 20px}
     var cmt=((CUR.drComment!=null? CUR.drComment : b.commentSuggest)||'').trim();
     prEl.innerHTML =
       '<div class="pr-hd"><div><div class="pr-brand">신신당부</div><div class="pr-t">'+p.nm+'님의 건강 리포트</div>'
-      +'<div class="pr-sub">'+b.stage.label+' · 발행 2026-07-29 · 담당의 이종수 (신촌힘찬병원 신장내과) · 최근 한 달 기록률 <b>'+b.recRate+'%</b></div></div>'
+      +'<div class="pr-sub">'+b.stage.label+' · 발행 2026-07-29 · 담당의 이준혁 (신촌힘찬병원 신장내과) · 최근 한 달 기록률 <b>'+b.recRate+'%</b></div></div>'
       +(nx? '<div class="pr-dday"><div class="l">다음 진료까지</div><div class="d">'+(dd||nx[1])+'</div><div class="w">'+nx[1]+'</div></div>':'')
       +'</div>'
       +(cmt? '<div class="pr-cmt"><div class="who">담당의 선생님의 한마디</div>'+cmt+'</div>':'')
@@ -2206,7 +2206,7 @@ body{padding:28px 20px}
       +'<label>A · 평가</label><textarea'+ro+'>'+n.A+'</textarea>'
       +'<label>P · 계획 &nbsp;<button class="mini-btn" id="noteToPlan" style="text-transform:none;letter-spacing:0">실천 과제로 보내기</button></label><textarea id="noteP"'+ro+'>'+n.P+'</textarea>'
       +'</div>'
-      +(n.locked? '<div class="sign-meta">이종수 · '+n.signAt+' 전자서명 — 수정 불가, 사본으로만 이어쓰기 가능</div>'
+      +(n.locked? '<div class="sign-meta">이준혁 · '+n.signAt+' 전자서명 — 수정 불가, 사본으로만 이어쓰기 가능</div>'
         : '<div class="chips" style="margin-top:12px">'+NOTE_TMPL.map(function(t3){ return '<span class="tmpl">'+t3+'</span>'; }).join('')+'</div>'
           +'<div class="tmpl-add"><input id="tmplNew" type="text" placeholder="자주 쓰는 문구 추가" aria-label="문구 추가"><button class="mini-btn" id="tmplAdd">추가</button></div>')
       +'<div class="pdf-row" style="padding:16px 0 0">'
@@ -2274,10 +2274,10 @@ body{padding:28px 20px}
     VIEW_EL.settings.innerHTML =
       '<div class="set-grid">'
       +'<section class="card"><div class="card-hd"><h2>내 프로필</h2></div>'
-      +'<div class="set-row"><div class="d">이름<small>이종수 · 신장내과 전문의</small></div></div>'
+      +'<div class="set-row"><div class="d">이름<small>이준혁 · 신장내과 전문의</small></div></div>'
       +'<div class="set-row"><div class="d">소속<small>신촌힘찬병원 신장내과</small></div></div>'
-      +'<div class="set-row"><div class="d">면허번호<small>제 12345 호 · 대한민국 보건복지부</small></div></div>'
-      +'<div class="set-row"><div class="d">이메일<small>js1129@yuhs.ac</small></div><button class="mini-btn" id="editProfile">프로필 수정</button></div></section>'
+      +'<div class="set-row"><div class="d">면허번호<small>제 910421 호 · 대한민국 보건복지부</small></div></div>'
+      +'<div class="set-row"><div class="d">이메일<small>jhlee@kidneasy.com</small></div><button class="mini-btn" id="editProfile">프로필 수정</button></div></section>'
       +'<section class="card"><div class="card-hd"><h2>환자 연결</h2></div>'
       +'<div class="set-row"><div class="d">병원·의사명 검색 노출<small>환자가 검색으로 연결을 요청할 수 있습니다</small></div><button class="switch on" role="switch" aria-checked="true" aria-label="검색 노출"></button></div>'
       +'<div class="set-row"><div class="d">연결 요청 자동 수락<small>끔 권장 — 수락 전 환자 정보는 최소만 표시</small></div><button class="switch" role="switch" aria-checked="false" aria-label="자동 수락"></button></div>'
