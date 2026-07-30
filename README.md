@@ -26,7 +26,7 @@ CKD(만성신장질환) 환자 식이·예후 관리 솔루션 **신신당부**�
 2. nginx 정적 컨테이너 빌드
 3. Artifact Registry 이미지 push
 4. `asia-northeast3`의 `sinsin-doctor-mockup` Cloud Run 서비스 배포
-5. `/healthz`, `/`, `/demo.html` smoke test
+5. `/health`, `/`, `/demo.html` smoke test
 
 Cloud Run은 배포 시 기본 `run.app` HTTPS 주소를 제공합니다. 커스텀 도메인은
 별도 작업입니다. 현재 리전은 Cloud Run 직접 domain mapping 지원 대상이
