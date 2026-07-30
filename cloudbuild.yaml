@@ -4,8 +4,8 @@ options:
 substitutions:
   _AR_HOSTNAME: asia-northeast3-docker.pkg.dev
   _AR_REPOSITORY: cloud-run-source-deploy
-  _IMAGE_NAME: sinsin-doctor-mockup
-  _SERVICE_NAME: sinsin-doctor-mockup
+  _IMAGE_NAME: sinsin-doctor
+  _SERVICE_NAME: sinsin-doctor
   _DEPLOY_REGION: asia-northeast3
   _RUNTIME_SERVICE_ACCOUNT: sinsin-doctor-mockup-sa@sinsin-486209.iam.gserviceaccount.com
 
