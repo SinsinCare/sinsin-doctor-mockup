@@ -14,3 +14,21 @@ CKD(만성신장질환) 환자 식이·예후 관리 솔루션 **신신당부**�
 - **[HANDOFF.md](HANDOFF.md)** — 프론트엔드 재구현 가이드 (스택·화면 구조·데이터 규칙·디자인 토큰·마일스톤·인수 기준)
 - **[API.md](API.md)** — 서버 데이터 계약 초안 (타입·엔드포인트·서버/클라 책임 분담·CGM 예약)
 - `index.html` / `demo.html`은 참조 구현 — 동작 기준이며, 이어서 개발하지 않습니다
+
+## Cloud Run 배포
+
+`main` 브랜치에 push 또는 merge되면
+`sinsin-doctor-mockup-main-cloudbuild` 트리거가 `cloudbuild.yaml`을 실행합니다.
+
+배포 과정은 다음과 같습니다.
+
+1. 정적 소스 파일 검증
+2. nginx 정적 컨테이너 빌드
+3. Artifact Registry 이미지 push
+4. `asia-northeast3`의 `sinsin-doctor-mockup` Cloud Run 서비스 배포
+5. `/healthz`, `/`, `/demo.html` smoke test
+
+Cloud Run은 배포 시 기본 `run.app` HTTPS 주소를 제공합니다. 커스텀 도메인은
+별도 작업입니다. 현재 리전은 Cloud Run 직접 domain mapping 지원 대상이
+아니므로 production 도메인은 global external Application Load Balancer,
+Google-managed certificate, DNS를 연결하는 방식을 사용합니다.

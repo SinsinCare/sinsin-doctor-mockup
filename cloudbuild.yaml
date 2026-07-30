@@ -1,0 +1,81 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+substitutions:
+  _AR_HOSTNAME: asia-northeast3-docker.pkg.dev
+  _AR_REPOSITORY: cloud-run-source-deploy
+  _IMAGE_NAME: sinsin-doctor-mockup
+  _SERVICE_NAME: sinsin-doctor-mockup
+  _DEPLOY_REGION: asia-northeast3
+  _RUNTIME_SERVICE_ACCOUNT: sinsin-doctor-mockup-sa@sinsin-486209.iam.gserviceaccount.com
+
+steps:
+  - id: Validate static sources
+    name: alpine:3.21
+    entrypoint: sh
+    args:
+      - -ceu
+      - |
+        test -s index.html
+        test -s demo.html
+        test -s HANDOFF.md
+        test -s API.md
+
+  - id: Build image
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --pull
+      - --tag
+      - $_AR_HOSTNAME/$PROJECT_ID/$_AR_REPOSITORY/$_IMAGE_NAME:$COMMIT_SHA
+      - .
+
+  - id: Push image
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - $_AR_HOSTNAME/$PROJECT_ID/$_AR_REPOSITORY/$_IMAGE_NAME:$COMMIT_SHA
+
+  - id: Deploy Cloud Run
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: bash
+    args:
+      - -ceu
+      - |
+        gcloud run deploy "$_SERVICE_NAME" \
+          --project "$PROJECT_ID" \
+          --image "$_AR_HOSTNAME/$PROJECT_ID/$_AR_REPOSITORY/$_IMAGE_NAME:$COMMIT_SHA" \
+          --region "$_DEPLOY_REGION" \
+          --service-account "$_RUNTIME_SERVICE_ACCOUNT" \
+          --no-invoker-iam-check \
+          --port 8080 \
+          --min-instances 0 \
+          --max-instances 2 \
+          --memory 256Mi \
+          --cpu 1 \
+          --concurrency 80 \
+          --quiet
+
+  - id: Verify deployment
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: bash
+    args:
+      - -ceu
+      - |
+        URL="$$(gcloud run services describe "$_SERVICE_NAME" \
+          --project "$PROJECT_ID" \
+          --region "$_DEPLOY_REGION" \
+          --format='value(status.url)')"
+
+        for attempt in 1 2 3 4 5; do
+          if curl --fail --silent --show-error "$$URL/healthz" >/dev/null \
+            && curl --fail --silent --show-error "$$URL/" >/dev/null \
+            && curl --fail --silent --show-error "$$URL/demo.html" >/dev/null; then
+            exit 0
+          fi
+          sleep 10
+        done
+        exit 1
+
+images:
+  - $_AR_HOSTNAME/$PROJECT_ID/$_AR_REPOSITORY/$_IMAGE_NAME:$COMMIT_SHA
