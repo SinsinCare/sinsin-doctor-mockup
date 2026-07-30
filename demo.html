@@ -319,6 +319,7 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .m.crit{background:var(--accent-bg); color:var(--accent-deep)} .m.ok{background:var(--mute-bg); color:var(--mute)}
 .ai-line b{font-variant-numeric:tabular-nums}
 .ai-line .ai-v{flex:none; font-weight:600; margin-top:1px}
+.ai-v .ai-sub{display:block; font-size:10.5px; font-weight:600; color:var(--ink3); margin-top:2px}
 .ai-line .ai-d{flex:1; color:var(--ink2); margin-top:1px; padding-left:10px; border-left:2px solid var(--border); min-width:0}
 /* 영양소 식별 컬러 (경고 오렌지·프라이머리 블루와 분리된 identity 색) — 커스텀 프로퍼티로 캐스케이드 안전하게 */
 .nc-prot{--nc-bg:#F4EFFF; --nc-fg:#7052E0}
@@ -327,9 +328,11 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .nc-p{--nc-bg:#FFEDF4; --nc-fg:#BC3A64}
 .nc-rec{--nc-bg:var(--mute-bg); --nc-fg:var(--mute)}
 .nc-water{--nc-bg:#E3EEFB; --nc-fg:#1D66B8}
+.nc-glu{--nc-bg:#FFEBE7; --nc-fg:#BD4238} /* 혈당 코럴 — 로즈(h5)·앰버(h55) 사이 h28, OKLCH L .55/.955 */
 .m[class*="nc-"], .chips span[class*="nc-"], .badge[class*="nc-"], .flag[class*="nc-"]{background:var(--nc-bg); color:var(--nc-fg)}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .nc-water{--nc-bg:#1D3350; --nc-fg:#8FBCF0}
+  :root:not([data-theme="light"]) .nc-glu{--nc-bg:#44241F; --nc-fg:#FEABA0}
   :root:not([data-theme="light"]) .nc-prot{--nc-bg:#2B2452; --nc-fg:#C8B8FF}
   :root:not([data-theme="light"]) .nc-na{--nc-bg:#3E3708; --nc-fg:#D8C560}
   :root:not([data-theme="light"]) .nc-k{--nc-bg:#143726; --nc-fg:#5CC08E}
@@ -338,6 +341,8 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 :root[data-theme="dark"] .nc-prot{--nc-bg:#2B2452; --nc-fg:#B9A5F8}
 :root[data-theme="dark"] .nc-na{--nc-bg:#3E3708; --nc-fg:#EFDC77}
 :root[data-theme="dark"] .flag.crit, :root[data-theme="dark"] .badge.crit{background:#4A3512; color:#F6B570}
+:root[data-theme="dark"] .nc-glu{--nc-bg:#44241F; --nc-fg:#FEABA0}
+:root[data-theme="light"] .nc-glu{--nc-bg:#FFEBE7; --nc-fg:#BD4238}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .flag.crit, :root:not([data-theme="light"]) .badge.crit{background:#4A3512; color:#F6B570} }
 :root[data-theme="dark"] .nc-k{--nc-bg:#143726; --nc-fg:#5CC08E}
 :root[data-theme="dark"] .nc-p{--nc-bg:#3D1B28; --nc-fg:#F58BA8}
@@ -443,7 +448,7 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .modal{width:560px; max-width:100%; max-height:84vh; overflow-y:auto; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px; box-shadow:var(--shadow)}
 .modal-hd{display:flex; align-items:flex-start; gap:8px}
 .modal-img{width:176px; height:176px; object-fit:cover; border-radius:var(--r-md); margin-top:12px; display:block}
-.insight{margin-top:12px; border:0; background:var(--blue-tint); border-radius:var(--r-md); padding:14px 16px; display:flex; flex-direction:column; gap:8px}
+.insight{margin-top:12px; border:0; background:var(--surface2); border-radius:var(--r-md); padding:14px 16px; display:flex; flex-direction:column; gap:8px}
 .ins-hd{font-size:12.5px; font-weight:900; color:var(--blue); display:flex; align-items:baseline; gap:8px}
 .ins-hd .sub{font-size:10.5px; font-weight:600; color:var(--ink3)}
 .ins-row{display:flex; gap:12px; font-size:12.5px; align-items:flex-start}
@@ -453,8 +458,8 @@ svg text{font-family:inherit; font-variant-numeric:tabular-nums}
 .ins-badge{display:inline-block; font-size:10.5px; font-weight:800; border-radius:999px; padding:2px 10px}
 .ins-tx{display:block; margin-top:6px}
 .ins-badge.amber{background:var(--accent-bg); color:var(--accent-deep)}
-.ins-badge.blue{background:var(--blue-tint); color:var(--blue)}
-.ins-badge.mute{background:var(--mute-bg); color:var(--mute)}
+.ins-badge.blue{background:var(--blue-tint2,#E2EAFE); color:var(--blue-deep,#2A4FC4)}
+.ins-badge.mute{background:var(--surface); color:var(--ink2)}
 .send-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:16px; align-items:start}
 @media (max-width:1080px){ .send-grid{grid-template-columns:1fr} }
 .send-label{font-size:10px; font-weight:800; letter-spacing:.08em; color:var(--ink3); text-transform:uppercase; display:block; margin-bottom:4px}
@@ -583,6 +588,26 @@ textarea{border:0 !important; background:var(--g75) !important}
 .day-panel{background:var(--surface)}
 /* 사이드바 항목 */
 .pt-item, .pt{border:0}
+/* ── 로그인 화면 ── */
+#loginScreen{position:fixed; inset:0; z-index:90; background:var(--ground); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:24px}
+#loginScreen[hidden]{display:none}
+.lg-card{width:400px; max-width:100%; background:var(--surface); border-radius:20px; padding:40px 36px 28px}
+.lg-brand{font-size:13px; font-weight:900; color:var(--blue); letter-spacing:.02em}
+.lg-brand span{font-size:10px; letter-spacing:.18em; color:var(--ink3); font-weight:800}
+.lg-h1{font-size:22px; font-weight:900; margin:14px 0 4px}
+.lg-sub{font-size:12px; color:var(--ink2); margin:0 0 8px}
+.lg-label{display:block; font-size:11px; font-weight:800; color:var(--ink2); margin:14px 0 6px}
+.lg-input{width:100%; box-sizing:border-box; font:inherit; font-size:14px; padding:11px 14px; border:0; border-radius:10px; background:var(--g100); color:var(--ink)}
+.lg-input:focus-visible{outline:2px solid var(--blue); outline-offset:1px}
+.lg-otp{text-align:center; font-size:22px; font-weight:800; letter-spacing:.5em; font-variant-numeric:tabular-nums; margin-top:12px}
+.lg-row{display:flex; justify-content:space-between; align-items:center; margin-top:12px; font-size:11.5px; color:var(--ink2)}
+.lg-keep{display:flex; align-items:center; gap:6px; cursor:pointer}
+.lg-keep input{accent-color:var(--blue)}
+.lg-link{border:0; background:none; font:inherit; font-size:11.5px; color:var(--blue); font-weight:700; cursor:pointer; padding:0}
+.lg-btn{width:100%; margin-top:16px; padding:11px 0; font-size:13.5px; border-radius:10px}
+.lg-otp-hd{font-size:14px; font-weight:900; margin-top:14px}
+.lg-foot-note{margin-top:18px; padding-top:14px; border-top:1px solid var(--g100); font-size:10.5px; color:var(--ink3); line-height:1.5}
+.lg-foot{font-size:10.5px; color:var(--ink3)}
 /* ── 반응형 정비: 단계적 강하 (풀폭 유지) ── */
 .grid{grid-template-columns:1.62fr minmax(300px,1fr)}         /* 홈 우측 칼럼 최소폭 보장 */
 .top5-grid{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))} /* TOP5: 좁아지면 줄바꿈, 압착 금지 */
@@ -624,6 +649,30 @@ body{padding:28px 20px}
 @media (max-width:900px){ .frame{height:auto} }
 </style>
 
+<div id="loginScreen" aria-label="의료진 로그인">
+  <div class="lg-card">
+    <div class="lg-brand">신신당부 <span>DOCTOR</span></div>
+    <h1 class="lg-h1">의료진 로그인</h1>
+    <p class="lg-sub">환자의 식이 기록과 검사 수치를 한 화면에서 봅니다</p>
+    <div id="lgStep1">
+      <label class="lg-label" for="lgEmail">이메일</label>
+      <input class="lg-input" id="lgEmail" type="email" value="js1129@yuhs.ac" autocomplete="username">
+      <label class="lg-label" for="lgPw">비밀번호</label>
+      <input class="lg-input" id="lgPw" type="password" value="demo-password" autocomplete="current-password">
+      <div class="lg-row"><label class="lg-keep"><input type="checkbox" checked> 이 기기에서 자동 로그인</label><button class="lg-link" type="button">비밀번호 재설정</button></div>
+      <button class="btn primary lg-btn" id="lgGo">로그인</button>
+    </div>
+    <div id="lgStep2" hidden>
+      <div class="lg-otp-hd">2단계 인증</div>
+      <p class="lg-sub" style="margin-top:2px">등록된 휴대폰(010-••••-4821)으로 보낸 6자리 인증번호를 입력해 주세요.</p>
+      <input class="lg-input lg-otp" id="lgOtp" inputmode="numeric" maxlength="6" value="482913" aria-label="인증번호 6자리">
+      <button class="btn primary lg-btn" id="lgOk">확인</button>
+      <div class="lg-row" style="justify-content:center"><button class="lg-link" type="button">인증번호 재전송</button></div>
+    </div>
+    <div class="lg-foot-note">계정은 병원 관리자 또는 메디올로지 파트너 온보딩을 통해 발급됩니다.</div>
+  </div>
+  <div class="lg-foot">ⓒ Mediology · 데모 환경 — 입력값과 무관하게 로그인됩니다</div>
+</div>
 <div class="wrap">
   <div class="frame">
     <!-- ───────── sidebar ───────── -->
@@ -1113,9 +1162,9 @@ body{padding:28px 20px}
       : {nc:'water',tag:'수분',tx:'해당 없음 — 수분 제한 미설정(기록만).'});
     if(sgS){ var sgRec=[], sgEx=0; for(var q3=N-31;q3<N;q3++) if(sgS[q3]>0){ sgRec.push(sgS[q3]); if(sgS[q3]>180) sgEx++; }
       var sgAvg=sgRec.length? Math.round(sgRec.reduce(function(a2,b2){return a2+b2;},0)/sgRec.length):0;
-      ai.push({nc:'rec',tag:'혈당',tx: sgAvg
-        ? '자가혈당 평균 <b>'+sgAvg+'mg/dL</b> — 목표(180) '+(sgAvg>180?'초과':'이내')+', 초과 '+sgEx+'일. '
-          +(sgEx>=7?'외식·국물 식사일과 겹치는지 차트에서 확인 필요.':sgEx>=3?'식사 시간 규칙화 권장.':'현 패턴 유지.')+' HbA1c '+hbS[hbS.length-1].toFixed(1)+'%.'
+      ai.push({nc:'glu',tag:'혈당',tx: sgAvg
+        ? '자가혈당 평균 <b>'+sgAvg+'mg/dL</b><span class="ai-sub">HbA1c '+hbS[hbS.length-1].toFixed(1)+'%</span> — 목표(180) '+(sgAvg>180?'초과':'이내')+', 초과 '+sgEx+'일. '
+          +(sgEx>=7?'외식·국물 식사일과 겹치는지 차트에서 확인 필요.':sgEx>=3?'식사 시간 규칙화 권장.':'현 패턴 유지.')
         : 'HbA1c <b>'+hbS[hbS.length-1].toFixed(1)+'%</b> — 자가혈당 기록 없음, 기록 독려.'});
     }
     // 섭취 5줄(단백질·Na·K·P·수분)은 항상 고정 노출, 기록 줄은 필요 시 추가 (최대 6줄)
@@ -1737,6 +1786,19 @@ body{padding:28px 20px}
       showToast('리포트가 환자 앱으로 전송되었습니다'+(CUR&&CUR.planApproved?' — 식단 제안 포함':''));
   });
 
+  // ── 로그인 플로우 (데모: 입력 무관 통과 · ?view= 딥링크/캡처 시 스킵) ──
+  (function(){
+    var ls=document.getElementById('loginScreen'); if(!ls) return;
+    if(/view=|figmacapture|snap=/.test(location.search+location.hash)){ ls.hidden=true; return; }
+    var s1=document.getElementById('lgStep1'), s2=document.getElementById('lgStep2');
+    function toOtp(){ s1.hidden=true; s2.hidden=false; var o=document.getElementById('lgOtp'); o.focus(); o.select&&o.select(); }
+    function enter(){ ls.hidden=true; }
+    document.getElementById('lgGo').addEventListener('click',toOtp);
+    document.getElementById('lgPw').addEventListener('keydown',function(e){ if(e.key==='Enter') toOtp(); });
+    document.getElementById('lgOk').addEventListener('click',enter);
+    document.getElementById('lgOtp').addEventListener('keydown',function(e){ if(e.key==='Enter') enter(); });
+    window.__logout=function(){ s1.hidden=false; s2.hidden=true; ls.hidden=false; };
+  })();
   // ── 토스트 ──
   var toast=document.createElement('div'); toast.className='toast'; document.body.appendChild(toast);
   var toastT;
@@ -2228,7 +2290,7 @@ body{padding:28px 20px}
       +'<div class="set-row"><div class="d">2단계 인증<small>로그인 시 OTP 확인</small></div><button class="switch on" role="switch" aria-checked="true" aria-label="2단계 인증"></button></div>'
       +'<div class="set-row"><div class="d">자동 로그아웃</div><input class="thr-input" value="30" aria-label="자동 로그아웃"> <span class="hint">분</span></div>'
       +'<div class="set-row"><div class="d">비밀번호</div><button class="mini-btn" id="pwChange">변경</button></div>'
-      +'<div class="set-row"><div class="d">마지막 로그인<small>오늘 08:12 · Chrome · Seoul</small></div></div></section>'
+      +'<div class="set-row"><div class="d">마지막 로그인<small>오늘 08:12 · Chrome · Seoul</small></div><button class="mini-btn" id="lgOut">로그아웃</button></div></section>'
       +'</div>'
       +'<div class="zone-note">권한 관리·병원 커스터마이징 등 관리자 설정은 Phase 2 범위입니다.</div>';
     VIEW_EL.settings.addEventListener('click',function(e){
@@ -2238,6 +2300,7 @@ body{padding:28px 20px}
       if(e.target.id==='editProfile') openProfileModal();
       if(e.target.id==='reqHistory') openReqHistoryModal();
       if(e.target.id==='pwChange') openPwModal();
+      if(e.target.id==='lgOut' && window.__logout) window.__logout();
     });
   }
 
