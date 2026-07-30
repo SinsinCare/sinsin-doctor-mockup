@@ -3,8 +3,8 @@
 > **이 저장소의 `index.html`은 참조 구현(reference implementation)입니다. 이어서 개발하지 말고, 아래 스택으로 재구현하세요.**
 > 화면·인터랙션·데이터 규칙의 최종 기준은 배포된 데모입니다. 문서와 데모가 다르면 데모가 맞습니다.
 
-- 실사용 레이아웃(풀폭): https://sinsincare.github.io/sinsin-doctor-dashboard/
-- 시연 레이아웃(센터드 프레임): https://sinsincare.github.io/sinsin-doctor-dashboard/demo.html
+- 실사용 레이아웃(풀폭): https://sinsincare.github.io/sinsin-doctor-mockup/
+- 시연 레이아웃(센터드 프레임): https://sinsincare.github.io/sinsin-doctor-mockup/demo.html
 - 기능 명세(결정 이력·임상 근거 포함): Notion "기능명세서 v2" — 접근 권한은 발주자에게 요청
 - 디자인 파일: Figma `1mW13xV8NormDrZQIjtbw1` (메디올로지 팀)
 - API 계약 초안: [`API.md`](API.md)
