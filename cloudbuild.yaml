@@ -71,7 +71,11 @@ steps:
         for attempt in 1 2 3 4 5; do
           if curl --fail --silent --show-error "$$URL/health" >/dev/null \
             && curl --fail --silent --show-error "$$URL/" >/dev/null \
-            && curl --fail --silent --show-error "$$URL/demo.html" >/dev/null; then
+            && curl --fail --silent --show-error "$$URL/demo.html" >/dev/null \
+            && test "$$(curl --silent --output /dev/null --write-out '%{http_code}' "$$URL/demo")" = 308 \
+            && test "$$(curl --silent --output /dev/null --write-out '%{http_code}' "$$URL/demo/")" = 308 \
+            && curl --fail --silent --show-error --location "$$URL/demo" >/dev/null \
+            && curl --fail --silent --show-error --location "$$URL/demo/" >/dev/null; then
             exit 0
           fi
           sleep 10
