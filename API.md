@@ -95,6 +95,7 @@ interface PatientReport {                       // 환자 앱 전송 리포트 (
 | POST | `/auth/login` | `{email, password}` → `{otpRequired: true, txId}` |
 | POST | `/auth/otp` | `{txId, code}` → `{accessToken, refreshToken, doctor}` |
 | POST | `/auth/logout` | 토큰 무효화 (변경 시 타 기기 로그아웃 정책) |
+| POST | `/access-requests` | **도입 신청(비인증)**: `{hospital, dept, name, contact}` → 접수. 메디올로지 백오피스에서 의료진 확인 후 승인·계정 발급 (SLA 영업일 2일). 스팸 방지 rate-limit 필요 |
 
 ### 환자
 | Method | Path | 설명 |
