@@ -37,6 +37,16 @@ steps:
       - push
       - $_AR_HOSTNAME/$PROJECT_ID/$_AR_REPOSITORY/$_IMAGE_NAME:$COMMIT_SHA
 
+  # ⚠️ 이 단계는 `--no-invoker-iam-check` 로 배포한다 — 서비스가 인증 없이 열린다.
+  #
+  # 이 저장소가 **완전한 정적 목업**이라서 허용한 값이다.
+  # 확인(2026-08-30): index.html·demo.html 에 fetch·axios·XMLHttpRequest·WebSocket 이
+  # 한 군데도 없고, 외부 주소는 SVG 네임스페이스뿐이다. 환자 데이터로 가는 길이 없다.
+  #
+  # **데이터를 부르는 화면에는 이 설정을 재사용하지 말 것.**
+  # 이 파일을 복사해 새 서비스를 배포하려 한다면, 먼저 그 화면이 어떤 데이터에
+  # 닿는지부터 보고 그 줄을 지운 뒤 invoker IAM 으로 접근을 통제한다.
+  # 목업에서 괜찮았다는 이유로 따라오면 그때는 진짜 구멍이 된다.
   - id: Deploy Cloud Run
     name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
     entrypoint: bash
